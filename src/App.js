@@ -11,6 +11,7 @@ import Contact from './pages/Contact';
 import ComponentDetail from './components/ProductDetail';
 import AppCart from './components/AppCart';
 import AppCheckout from './components/AppCheckout';
+import Custom from './pages/Custom';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="product/:id" element={<ComponentDetail />} />
             <Route path="cart/" element={<AppCart />} />
             <Route path="checkout/" element={<AppCheckout />} />
+            <Route path="custom-pc/" element={<Custom />} />
             <Route path="contact" element={<Contact />} />
           </Route>
         </Routes>

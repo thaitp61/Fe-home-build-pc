@@ -11,14 +11,15 @@ import {
   MDBRipple,
 } from "mdb-react-ui-kit";
 import { Link } from 'react-router-dom';
+import "../css/Product.css"
 
 function Product({ id, componentName, price, image }) {
   return (
     // <MDBCol md="12" lg="2" className="mb-8 ">
     <Link to={`/product/${id}`} className="text-reset">
       <MDBCard className="hover-overlay hover-shadow" >
-        <MDBRipple rippleTag='div' className='bg-image'>
-          <img src={image} className='w-100' alt={componentName} />
+        <MDBRipple rippleTag='div' className='bg-image' >
+          <img src={image} className='w-100 card-image ' alt={componentName} />
           <div className='mask' style={{ backgroundColor: 'rgba(57, 192, 237, 0.2)' }}></div>
         </MDBRipple>
         <MDBCardBody>

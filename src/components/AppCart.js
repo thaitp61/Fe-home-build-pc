@@ -15,14 +15,13 @@ import "../css/cart.css"
 import { Link } from 'react-router-dom';
 import axios from "axios";
 
-const AppCart = () => {
+const AppCart = ({}) => {
   const [cartItems, setCartItems] = useState([]);
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
-        const response = await axios.post(
-          "https://server-buildingpc.herokuapp.com/cart/getcart",
-          { userID: "PhuongThai" }
+        const response = await axios.get(
+          `https://server-buildingpc.herokuapp.com/cart/getcart?userID=PhuongThai`
         );
         setCartItems(response?.data);
       } catch (error) {
@@ -32,6 +31,33 @@ const AppCart = () => {
     fetchCartItems(cartItems);
   }, []);
 
+  const removeComponent = async (componentID, userID, fetchCartItems) => {
+    try {
+      const response = await fetch('https://server-buildingpc.herokuapp.com/cart/removecomponent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          componentID: componentID,
+          userID: userID
+        })
+      });
+      if (response.ok) {
+        console.log('Đã xóa sản phẩm khỏi giỏ hàng');
+        // gọi hàm getCart để cập nhật danh sách giỏ hàng
+        fetchCartItems(cartItems);
+      } else {
+        console.log('Lỗi xóa sản phẩm khỏi giỏ hàng');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+ 
+ 
+
+
   const [quantity, setQuantity] = useState(0);
 
   // Hàm xử lý sự kiện khi người dùng thay đổi giá trị của input
@@ -39,6 +65,13 @@ const AppCart = () => {
     const newQuantity = parseInt(event.target.value); // Chuyển giá trị từ chuỗi sang số nguyên
     setQuantity(newQuantity); // Lưu giá trị mới vào state `quantity`
   };
+  // const updateCartItems = async (event) => {
+  //   const arr = [{id: 1, quantity: 1}, {id: 2, quantity:2}, {id: 3, quantity:2}]
+  //   const promise = arr.map((item) => {
+
+  //     return axios.post('.........', item)})
+  //     await Promise.all(promises)
+  // }
 
   return (
     <section className="h-100 h-custom" style={{ backgroundColor: "#eee" }}>
@@ -59,7 +92,7 @@ const AppCart = () => {
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <div>
                         <p className="mb-1">Shopping cart</p>
-                        <p className="mb-0">You have items in your cart</p>
+                        <b className="mb-0">You have {cartItems?.TotalQuantity} items in your cart</b>
                       </div>
                       <div>
                         <p>
@@ -72,7 +105,7 @@ const AppCart = () => {
                       </div>
                     </div>
                     <MDBCard className="rounded-3 mb-4">
-                      {cartItems?.Product?.map((item, i) => (
+                      {cartItems?.ProductDetail?.map((item, i) => (
                         <MDBCardBody className="p-4" key={i}>
                           <MDBRow className="justify-content-between align-items-center">
 
@@ -85,22 +118,22 @@ const AppCart = () => {
 
                             </MDBCol>
                             <MDBCol md="3" lg="3" xl="3">
-                              <p className="lead fw-normal mb-2">{item.name}</p>
+                              <p className="lead fw-normal mb-2">{item.componentName}</p>
                               <p>
                                 <span className="text-muted">price:{item.price} </span>
                               </p>
                             </MDBCol>
                             <MDBCol md="3" lg="3" xl="2"
                               className="d-flex align-items-center justify-content-around">
-                              <MDBInput min={0} value={item.amount} type="number" size="sm" onChange={handleQuantityChange} />
+                              <MDBInput min={0} defaultValue={item.amount} type="number" size="sm" onChange={handleQuantityChange} />
                             </MDBCol>
                             <MDBCol md="3" lg="2" xl="2" className="offset-lg-1">
                               <MDBTypography tag="h5" className="mb-0 text-danger" >
                                 totally: {item.price * item.amount} VNĐ
                               </MDBTypography>
                             </MDBCol>
-                            <MDBCol md="1" lg="1" xl="1" className="text-end">
-                              <a href="#!" className="text-danger">
+                            <MDBCol md="1" lg="1" xl="1" className="text-end" onClick={() => removeComponent(item?.componentID, "PhuongThai")} >
+                              <a className="text-danger">
                                 <MDBIcon fas icon="trash text-danger" size="lg" />
                               </a>
                             </MDBCol>
