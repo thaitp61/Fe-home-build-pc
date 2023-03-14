@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import axios from 'axios';
 
 const AppCheckout = () => {
     const [formData, setFormData] = useState({
@@ -16,22 +16,53 @@ const AppCheckout = () => {
         order: '',
     });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: value,
-        }));
-    };
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setFormData((prevFormData) => ({
+    //         ...prevFormData,
+    //         [name]: value,
+    //     }));
+    // };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(formData);
-    };
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     console.log(formData);
+    // };
+    const [bills, setBills] = useState([]);
+
+    useEffect(() => {
+        fetch("https://server-buildingpc.herokuapp.com/bill/getBill?userID=PhuongThai")
+            .then((response) => response.json())
+            .then((data) => {
+                // Lọc và chỉ giữ lại những sản phẩm có status: 1
+                const filteredBills = data.billDetail.filter(bill => bill.status === 1);
+                setBills(filteredBills);
+            })
+            .catch((error) => {
+                // Xử lý lỗi khi gọi API
+                console.log(error);
+            });
+    }, []);
+    function handleOrder() {
+        const data = {
+            userID: 'PhuongThai'
+        };
+
+        axios.post('https://server-buildingpc.herokuapp.com/bill/finishCheckout', data)
+            .then(response => {
+                console.log(response.data);
+                // handle response data here
+            })
+            .catch(error => {
+                console.error(error);
+                // handle error here
+            });
+    }
+
 
     return (
         <div className="maincontainer">
-            
+
             <div class="container">
                 <div class="py-5 text-center">
                     <h2>Checkout form</h2>
@@ -41,42 +72,35 @@ const AppCheckout = () => {
                     <div class="col-md-4 order-md-2 mb-4">
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                             <span class="text-muted">Your cart</span>
-                            <span class="badge badge-secondary badge-pill">3</span>
+                            <span class="badge badge-secondary badge-pill">{bills?.billDetail?.componentDetail?.amount}</span>
                         </h4>
-                        <ul class="list-group mb-3">
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                <div>
-                                    <h6 class="my-0">Product name</h6>
-                                    <small class="text-muted">Brief description</small>
+                        <ul className="list-group mb-3">
+                            {bills?.[0]?.componentDetail?.map((bill) => (
+                                <div key={bill.componentID}>
+                                    <li className="list-group-item d-flex justify-content-between lh-condensed">
+                                        <div>
+                                            <h6 className="my-0">{bill.componentName}</h6>
+                                            <small className="text-muted">Số lượng: {bill.amount}</small>
+                                        </div>
+                                        <span className="text-muted">{bill.price}</span>
+                                    </li>
+
                                 </div>
-                                <span class="text-muted">$12</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                <div>
-                                    <h6 class="my-0">Second product</h6>
-                                    <small class="text-muted">Brief description</small>
-                                </div>
-                                <span class="text-muted">$8</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                <div>
-                                    <h6 class="my-0">Third item</h6>
-                                    <small class="text-muted">Brief description</small>
-                                </div>
-                                <span class="text-muted">$5</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between bg-light">
-                                <div class="text-success">
-                                    <h6 class="my-0">Promo code</h6>
-                                    <small>EXAMPLECODE</small>
-                                </div>
-                                <span class="text-success">-$5</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span>Total (USD)</span>
-                                <strong>$20</strong>
-                            </li>
+
+                            ))}
+                            <div>
+                                <li className="list-group-item d-flex justify-content-between bg-light">
+                                    <div className="text-success">
+                                        <h6 className="my-0">Promo code</h6>
+                                    </div>
+                                </li>
+                                <li className="list-group-item d-flex justify-content-between">
+                                    <span>Total (VND)</span>
+                                    <strong>{bills?.[0]?.total}  VNĐ</strong>
+                                </li>
+                            </div>
                         </ul>
+
                         <form class="card p-2">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Promo code" />
@@ -223,17 +247,12 @@ const AppCheckout = () => {
                                 </div>
                             </div>
                             <hr class="mb-4" />
-                            <button class="btn btn-primary btn-lg btn-block" type="button">Continue to checkout</button>
+                            <button class="btn btn-primary btn-lg btn-block" type="button" onClick={handleOrder}>Đặt hàng</button>
                         </form>
                     </div>
                 </div>
                 <footer class="my-5 pt-5 text-muted text-center text-small">
-                    <p class="mb-1">&copy; 2020-2021 therichpost.com</p>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><a href="#">Privacy</a></li>
-                        <li class="list-inline-item"><a href="#">Terms</a></li>
-                        <li class="list-inline-item"><a href="#">Support</a></li>
-                    </ul>
+
                 </footer>
             </div>
 

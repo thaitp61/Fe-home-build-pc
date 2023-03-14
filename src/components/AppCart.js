@@ -15,23 +15,23 @@ import "../css/cart.css"
 import { Link } from 'react-router-dom';
 import axios from "axios";
 
-const AppCart = ({}) => {
+const AppCart = ({ }) => {
   const [cartItems, setCartItems] = useState([]);
+  const fetchCartItems = async () => {
+    try {
+      const response = await axios.get(
+        `https://server-buildingpc.herokuapp.com/cart/getcart?userID=PhuongThai`
+      );
+      setCartItems(response?.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const response = await axios.get(
-          `https://server-buildingpc.herokuapp.com/cart/getcart?userID=PhuongThai`
-        );
-        setCartItems(response?.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchCartItems(cartItems);
-  }, []);
+    fetchCartItems();
+  }, [cartItems]);
 
-  const removeComponent = async (componentID, userID, fetchCartItems) => {
+  const removeComponent = async (componentID, userID) => {
     try {
       const response = await fetch('https://server-buildingpc.herokuapp.com/cart/removecomponent', {
         method: 'POST',
@@ -46,7 +46,7 @@ const AppCart = ({}) => {
       if (response.ok) {
         console.log('Đã xóa sản phẩm khỏi giỏ hàng');
         // gọi hàm getCart để cập nhật danh sách giỏ hàng
-        fetchCartItems(cartItems);
+        fetchCartItems();
       } else {
         console.log('Lỗi xóa sản phẩm khỏi giỏ hàng');
       }
@@ -54,8 +54,31 @@ const AppCart = ({}) => {
       console.log(error);
     }
   };
- 
- 
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleCheckout = (userID) => {
+    setIsLoading(true);
+    fetch("https://server-buildingpc.herokuapp.com/bill/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userID: "PhuongThai"
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // xử lý dữ liệu trả về từ server, nếu có
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        // xử lý lỗi khi gọi API
+        setIsLoading(false);
+      });
+  };
+
+
 
 
   const [quantity, setQuantity] = useState(0);
@@ -138,7 +161,6 @@ const AppCart = ({}) => {
                               </a>
                             </MDBCol>
                           </MDBRow>
-
                         </MDBCardBody>
 
 
@@ -167,13 +189,13 @@ const AppCart = ({}) => {
                           <p className="mb-2">{cartItems.TotalPrice} VNĐ</p>
                         </div>
                         <Link to="/checkout/">
-                          <MDBBtn color="info" block size="lg">
+                          <MDBBtn color="info" block size="lg" >
                             <div className="d-flex justify-content-between">
                               <span>{cartItems.TotalPrice} VNĐ</span>
-                              <span>
-                                Checkout{" "}
+                              <button onClick={handleCheckout} disabled={isLoading}>
+                                {isLoading ? "Đang xử lý..." : "Checkout"}
                                 <i className="fas fa-long-arrow-alt-right ms-2"></i>
-                              </span>
+                              </button>
                             </div>
                           </MDBBtn>
                         </Link>

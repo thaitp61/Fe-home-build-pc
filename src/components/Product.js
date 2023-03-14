@@ -19,7 +19,7 @@ function Product({ id, componentName, price, image }) {
     <Link to={`/product/${id}`} className="text-reset">
       <MDBCard className="hover-overlay hover-shadow" >
         <MDBRipple rippleTag='div' className='bg-image' >
-          <img src={image} className='w-100 card-image ' alt={componentName} />
+          <img src={image} className='w-100 card-image' alt={componentName} />
           <div className='mask' style={{ backgroundColor: 'rgba(57, 192, 237, 0.2)' }}></div>
         </MDBRipple>
         <MDBCardBody>

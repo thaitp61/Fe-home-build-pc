@@ -1,6 +1,16 @@
-import React , { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from "axios";
-
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBIcon,
+  MDBBtn,
+  MDBRipple,
+} from "mdb-react-ui-kit";
 
 const Custom = () => {
   const [selectedOption, setSelectedOption] = useState('');
@@ -160,87 +170,107 @@ const Custom = () => {
 
   }, [selectedOption])
   return (
-    <div>
+    <MDBContainer fluid className="my-5 text-center">
+      <h4 className="mt-4 mb-5">
+        <strong></strong>
+      </h4>
       <div>
-        <select value={selectedOption} onChange={handleSelectChange}>
-          <option value="">Select an option</option>
-          <option value="1">AMD</option>
-          <option value="2">Intel</option>
-        </select>
+        <h1>TỰ LỰA CHỌN CẤU HÌNH PC</h1>
+        <div>
+        <h1>Nền tảng</h1>
+          <select value={selectedOption} onChange={handleSelectChange}>
+            <option value="">Select an option</option>
+            <option value="1">AMD</option>
+            <option value="2">Intel</option>
+          </select>
+        </div>
+
+        {selectedOption !== "" && (
+          <>
+
+            <div>
+              <select >
+                <option value="">Select Ram Option</option>
+                {rams.map(ram => (
+                  <option key={ram.componentID} value={ram.componentID}>{ram.componentName} ( + {ram.price.toLocaleString('vi-VN')} VNĐ)</option>
+                ))}
+              </select>
+            </div>
+
+            <div><select >
+              <option value="">Select CPU Option</option>
+              {cpu.map(cpu => (
+                <option key={cpu.componentID} value={cpu.componentID}>{cpu.componentName} ( + {cpu.price.toLocaleString('vi-VN')} VNĐ)</option>
+              ))}
+            </select></div>
+
+
+            <div>
+              <select>
+                <option value="">Select an option</option>
+                {psu.map(psu => (
+                  <option value={psu.componentID}>{psu.componentName} ( + {psu.price.toLocaleString('vi-VN')} VNĐ)</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <select>
+                <option value="">Select VGA option</option>
+                {vga.map(vga => (
+                  <option value={vga.componentID}>{vga.componentName} ( + {vga.price.toLocaleString('vi-VN')} VNĐ)</option>
+                ))}
+              </select>
+            </div>
+
+
+            <div>
+              <select>
+                <option value="">Select HDD/SSD option</option>
+                {luutru.map(luutru => (
+                  <option value={luutru.componentID}>{luutru.componentName} ( + {luutru.price.toLocaleString('vi-VN')} VNĐ)</option>
+                ))}
+              </select>
+            </div>
+
+
+
+            <div>
+              <select>
+                <option value="">Select Main option</option>
+                {bomachchu.map(bomachchu => (
+                  <option value={bomachchu.componentID}>{bomachchu.componentName} ( + {bomachchu.price.toLocaleString('vi-VN')} VNĐ)</option>
+                ))}
+              </select>
+            </div>
+
+
+            <div>
+              <select>
+                <option value="">Select FAN option</option>
+                {tannhiet.map(tannhiet => (
+                  <option value={tannhiet.componentID}>{tannhiet.componentName} ( + {tannhiet.price.toLocaleString('vi-VN')} VNĐ)</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <select>
+                <option value="">Select CASE option</option>
+                {casePC.map(casePC => (
+                  <option value={casePC.componentID}>{casePC.componentName} ( + {casePC.price.toLocaleString('vi-VN')} VNĐ)</option>
+                ))}
+              </select>
+            </div>
+
+          </>
+        )}
+
       </div>
-      <div>
-        <select>
-          <option value="">Select an option</option>
-          {rams.map(ram => (
-            <option value={ram.componentName}>{ram.componentName}</option>
-          ))}
-        </select>
-      </div>
 
-      <div><select>
-        <option value="">Select an option</option>
-        {cpu.map(cpu => (
-          <option value={cpu.componentName}>{cpu.componentName}</option>
-        ))}
-      </select></div>
+    </MDBContainer>
 
 
-      <div>
-        <select>
-          <option value="">Select an option</option>
-          {psu.map(psu => (
-            <option value={psu.componentName}>{psu.componentName}</option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <select>
-          <option value="">Select an option</option>
-          {vga.map(vga => (
-            <option value={vga.componentName}>{vga.componentName}</option>
-          ))}
-        </select>
-      </div>
-
-
-      <div>
-        <select>
-          <option value="">Select an option</option>
-          {luutru.map(luutru => (
-            <option value={luutru.componentName}>{luutru.componentName}</option>
-          ))}
-        </select>
-      </div>
-
-
-
-      <div>
-        <select>
-          <option value="">Select an option</option>
-          {bomachchu.map(bomachchu => (
-            <option value={bomachchu.componentName}>{bomachchu.componentName}</option>
-          ))}
-        </select>
-      </div>
-
-
-      <div>
-        <select>
-          <option value="">Select an option</option>
-          {tannhiet.map(tannhiet => (
-            <option value={tannhiet.componentName}>{tannhiet.componentName}</option>
-          ))}
-        </select>
-      </div>
-
-      <select>
-        <option value="">Select an option</option>
-        {casePC.map(casePC => (
-          <option value={casePC.componentName}>{casePC.componentName}</option>
-        ))}
-      </select>
-    </div>
   );
 }
 
