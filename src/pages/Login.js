@@ -48,7 +48,7 @@ const App = () => {
         </Form.Item>
 
         <a className="login-form-forgot" href="">
-          Forgot password
+          Forgot password hello
         </a>
       </Form.Item>
 
