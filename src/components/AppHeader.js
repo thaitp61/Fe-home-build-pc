@@ -6,7 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart,FaSignInAlt } from "react-icons/fa";
 
 const AppHeader = () => {
   return (
@@ -63,6 +63,11 @@ const AppHeader = () => {
           <Nav>
             <Nav.Link as={Link} to="/cart/">
               <FaShoppingCart className="cart-icon" />
+            </Nav.Link>
+          </Nav>
+          <Nav>
+            <Nav.Link as={Link} to="/login">
+              <FaSignInAlt className="cart-icon" />
             </Nav.Link>
           </Nav>
         </Container>
