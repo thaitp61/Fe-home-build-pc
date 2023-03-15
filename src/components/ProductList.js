@@ -25,7 +25,6 @@ function ProductList() {
 
         fetchData();
     }, []);
-    console.log('1', products)
 
     return (
         <div>

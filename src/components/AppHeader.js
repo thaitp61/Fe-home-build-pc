@@ -18,17 +18,11 @@ const AppHeader = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              {/* <Nav.Link as={Link} to="/">Laptop</Nav.Link>
-              <Nav.Link as={Link} to="/about">Linh kiện</Nav.Link>
-              <Nav.Link as={Link} to="/Contact">Phụ kiện</Nav.Link>
-              <Nav.Link as={Link} to="/Contact">Màn hình</Nav.Link>
-              <Nav.Link as={Link} to="/Contact">Tự chọn cấu hình</Nav.Link> */}
               <NavDropdown title="Laptop" id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/about">Laptop gamming</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Laptop đồ họa</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Laptop văn phòng</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Xem tất cả</NavDropdown.Item>
-
+                <NavDropdown.Item as={Link} to="/product-category/laptop/">Xem tất cả</NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Linh Kiện" id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/about">Bo mạch chủ</NavDropdown.Item>
@@ -39,19 +33,19 @@ const AppHeader = () => {
                 <NavDropdown.Item href="#action/3.4">RAM - Bộ nhớ trong"</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.4">Tản nhiệt - Fan RGB</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.4">VGA - Card màn hình</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Xem tất cả</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/product-category/linhkien/">Xem tất cả</NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Màn hình" id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/about">Màn hình gamming</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Màn hình đồ họa</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Màn hình văn phòng</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Xem tất cả</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/product-category/manhinh/">Xem tất cả</NavDropdown.Item>
               </NavDropdown>
               <NavDropdown  title="Phụ kiện" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.2">Đế tản nhiệt</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Phụ kiện PC</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Thiết bị mạng</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Xem tất cả</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/product-category/phukien/">Xem tất cả</NavDropdown.Item>
               </NavDropdown>
               <Nav.Link as={Link} to="custom-pc/">Tự Chọn cấu hình PC</Nav.Link>
             </Nav>
