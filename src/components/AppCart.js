@@ -29,7 +29,7 @@ const AppCart = ({ }) => {
   };
   useEffect(() => {
     fetchCartItems();
-  }, [cartItems]);
+  }, []);
 
   const removeComponent = async (componentID, userID) => {
     try {

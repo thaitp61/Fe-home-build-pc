@@ -11,6 +11,7 @@ import {
   MDBBtn,
   MDBRipple,
 } from "mdb-react-ui-kit";
+import Form from 'react-bootstrap/Form';
 
 const Custom = () => {
   const [selectedOption, setSelectedOption] = useState('');
@@ -176,91 +177,113 @@ const Custom = () => {
       </h4>
       <div>
         <h1>TỰ LỰA CHỌN CẤU HÌNH PC</h1>
-        <div>
-        <h1>Nền tảng</h1>
-          <select value={selectedOption} onChange={handleSelectChange}>
+        <Form.Group className="mb-3">
+          <Form.Label class="text-danger">Nền tảng</Form.Label>
+          <Form.Select value={selectedOption} onChange={handleSelectChange} >
             <option value="">Select an option</option>
             <option value="1">AMD</option>
             <option value="2">Intel</option>
-          </select>
-        </div>
+          </Form.Select>
+        </Form.Group>
 
         {selectedOption !== "" && (
           <>
 
             <div>
-              <select >
-                <option value="">Select Ram Option</option>
-                {rams.map(ram => (
-                  <option key={ram.componentID} value={ram.componentID}>{ram.componentName} ( + {ram.price.toLocaleString('vi-VN')} VNĐ)</option>
-                ))}
-              </select>
-            </div>
-
-            <div><select >
-              <option value="">Select CPU Option</option>
-              {cpu.map(cpu => (
-                <option key={cpu.componentID} value={cpu.componentID}>{cpu.componentName} ( + {cpu.price.toLocaleString('vi-VN')} VNĐ)</option>
-              ))}
-            </select></div>
-
-
-            <div>
-              <select>
-                <option value="">Select an option</option>
-                {psu.map(psu => (
-                  <option value={psu.componentID}>{psu.componentName} ( + {psu.price.toLocaleString('vi-VN')} VNĐ)</option>
-                ))}
-              </select>
+              <Form.Group className="mb-3">
+                <Form.Label>RAM</Form.Label>
+                <Form.Select>
+                  <option value="">Select Ram Option</option>
+                  {rams.map(ram => (
+                    <option key={ram.componentID} value={ram.componentID}>{ram.componentName} ( + {ram.price.toLocaleString('vi-VN')} VNĐ)</option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
             </div>
 
             <div>
-              <select>
-                <option value="">Select VGA option</option>
-                {vga.map(vga => (
-                  <option value={vga.componentID}>{vga.componentName} ( + {vga.price.toLocaleString('vi-VN')} VNĐ)</option>
-                ))}
-              </select>
+              <Form.Group className="mb-3">
+                <Form.Label>CPU</Form.Label>
+                <Form.Select>
+                  <option value="">Select CPU Option</option>
+                  {cpu.map(cpu => (
+                    <option key={cpu.componentID} value={cpu.componentID}>{cpu.componentName} ( + {cpu.price.toLocaleString('vi-VN')} VNĐ)</option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
             </div>
 
 
             <div>
-              <select>
-                <option value="">Select HDD/SSD option</option>
-                {luutru.map(luutru => (
-                  <option value={luutru.componentID}>{luutru.componentName} ( + {luutru.price.toLocaleString('vi-VN')} VNĐ)</option>
-                ))}
-              </select>
-            </div>
-
-
-
-            <div>
-              <select>
-                <option value="">Select Main option</option>
-                {bomachchu.map(bomachchu => (
-                  <option value={bomachchu.componentID}>{bomachchu.componentName} ( + {bomachchu.price.toLocaleString('vi-VN')} VNĐ)</option>
-                ))}
-              </select>
-            </div>
-
-
-            <div>
-              <select>
-                <option value="">Select FAN option</option>
-                {tannhiet.map(tannhiet => (
-                  <option value={tannhiet.componentID}>{tannhiet.componentName} ( + {tannhiet.price.toLocaleString('vi-VN')} VNĐ)</option>
-                ))}
-              </select>
+              <Form.Group className="mb-3">
+                <Form.Label>Nguồn</Form.Label>
+                <Form.Select>
+                  <option value="">Select an option</option>
+                  {psu.map(psu => (
+                    <option value={psu.componentID}>{psu.componentName} ( + {psu.price.toLocaleString('vi-VN')} VNĐ)</option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
             </div>
 
             <div>
-              <select>
-                <option value="">Select CASE option</option>
-                {casePC.map(casePC => (
-                  <option value={casePC.componentID}>{casePC.componentName} ( + {casePC.price.toLocaleString('vi-VN')} VNĐ)</option>
-                ))}
-              </select>
+              <Form.Group className="mb-3">
+                <Form.Label>VGA</Form.Label>
+                <Form.Select>
+                  <option value="">Select VGA option</option>
+                  {vga.map(vga => (
+                    <option value={vga.componentID}>{vga.componentName} ( + {vga.price.toLocaleString('vi-VN')} VNĐ)</option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            </div>
+
+
+            <div>
+              <Form.Group className="mb-3">
+                <Form.Label>Lưu trữ</Form.Label>
+                <Form.Select>
+                  <option value="">Select SSD option</option>
+                  {luutru.map(luutru => (
+                    <option value={luutru.componentID}>{luutru.componentName} ( + {luutru.price.toLocaleString('vi-VN')} VNĐ)</option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            </div>
+
+            <div>
+              <Form.Group className="mb-3">
+                <Form.Label>Main</Form.Label>
+                <Form.Select>
+                  <option value="">Select Main option</option>
+                  {bomachchu.map(bomachchu => (
+                    <option value={bomachchu.componentID}>{bomachchu.componentName} ( + {bomachchu.price.toLocaleString('vi-VN')} VNĐ)</option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            </div>
+            <div>
+              <Form.Group className="mb-3">
+                <Form.Label>Tản nhiệt CPU</Form.Label>
+                <Form.Select>
+                  <option value="">Select FAN option</option>
+                  {tannhiet.map(tannhiet => (
+                    <option value={tannhiet.componentID}>{tannhiet.componentName} ( + {tannhiet.price.toLocaleString('vi-VN')} VNĐ)</option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            </div>
+
+            <div>
+              <Form.Group className="mb-3">
+                <Form.Label>Case</Form.Label>
+                <Form.Select>
+                  <option value="">Select CASE option</option>
+                  {casePC.map(casePC => (
+                    <option value={casePC.componentID}>{casePC.componentName} ( + {casePC.price.toLocaleString('vi-VN')} VNĐ)</option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
             </div>
 
           </>
@@ -268,7 +291,7 @@ const Custom = () => {
 
       </div>
 
-    </MDBContainer>
+    </MDBContainer >
 
 
   );

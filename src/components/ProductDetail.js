@@ -36,57 +36,57 @@ const ComponentDetail = () => {
   const { componentName, image, price, description, amount } = component;
   const addToCart = (data1) => {
     axios.post('https://server-buildingpc.herokuapp.com/cart/add', data1)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
-  
 
   return (
-   
-    <Container>
-      <Row>
-        <Col md={6}>
-          <div className="product-image">
-            <img src={image} alt={componentName} />
-          </div>
-        </Col>
-        <Col md={6}>
-          <div className="product-details">
-            <h1 className="product-name">{componentName}</h1>
-            <p className="product-description">{description}</p>
-            <div className="product-price">
-              <span className="price-label">Price: </span>
-              <span className="price-value">{price} VND</span>
+    <MDBContainer fluid className="my-5">
+      <Container>
+        <Row>
+          <Col md={6}>
+            <div className="product-image">
+              <img src={image} alt={componentName} />
             </div>
-            <Form.Group controlId="quantity">
-              <Form.Label>Quantity</Form.Label>
-              <Form.Control
-                as="select"
-                value={quantity}
-                onChange={handleQuantityChange}
-              >
-                {Array.from({ length: amount }, (_, i) => i + 1).map(
-                  (quantity) => (
-                    <option key={quantity} value={quantity}>
-                      {quantity}
-                    </option>
-                  )
-                )}
-              </Form.Control>
-              
-            </Form.Group>
-            <Button variant="primary" className="add-to-cart-btn" onClick={() => addToCart({ userID: 'PhuongThai', componentID: id, amount: quantity, })}>
-              <FaCartPlus className="cart-icon" />
-              Add to cart
-            </Button>
-          </div>
-        </Col>
-      </Row>
-    </Container>
+          </Col>
+          <Col md={6}>
+            <div className="product-details">
+              <h1 className="product-name">{componentName}</h1>
+              <p className="product-description">{description}</p>
+              <div className="product-price">
+                <span className="price-label">Price: </span>
+                <span className="price-value">{price} VND</span>
+              </div>
+              <Form.Group controlId="quantity">
+                <Form.Label>Quantity</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                >
+                  {Array.from({ length: amount }, (_, i) => i + 1).map(
+                    (quantity) => (
+                      <option key={quantity} value={quantity}>
+                        {quantity}
+                      </option>
+                    )
+                  )}
+                </Form.Control>
+
+              </Form.Group>
+              <Button variant="primary" className="add-to-cart-btn" onClick={() => addToCart({ userID: 'PhuongThai', componentID: id, amount: quantity, })}>
+                <FaCartPlus className="cart-icon" />
+                Add to cart
+              </Button>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </MDBContainer>
   );
 };
 

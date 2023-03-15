@@ -29,7 +29,7 @@ function ProductList() {
 
     return (
         <div>
-            <h1>Component List</h1>
+            <h1>Danh sách sản phẩm</h1>
             <div className="row">
                 {products.map(component => (
                     <MDBCol md="12" lg="3" className="mb-4">
