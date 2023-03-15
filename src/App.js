@@ -12,6 +12,8 @@ import ComponentDetail from './components/ProductDetail';
 import AppCart from './components/AppCart';
 import AppCheckout from './components/AppCheckout';
 import Custom from './pages/Custom';
+import Login from './pages/Login';
+
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
             <Route path="checkout/" element={<AppCheckout />} />
             <Route path="custom-pc/" element={<Custom />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="login" element={<Login/>} />
           </Route>
         </Routes>
       </BrowserRouter>
