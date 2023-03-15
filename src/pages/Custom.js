@@ -191,7 +191,7 @@ const Custom = () => {
 
             <div>
               <Form.Group className="mb-3">
-                <Form.Label>RAM</Form.Label>
+                <Form.Label class="text-danger">RAM</Form.Label>
                 <Form.Select>
                   <option value="">Select Ram Option</option>
                   {rams.map(ram => (
@@ -203,7 +203,7 @@ const Custom = () => {
 
             <div>
               <Form.Group className="mb-3">
-                <Form.Label>CPU</Form.Label>
+                <Form.Label class="text-danger">CPU</Form.Label>
                 <Form.Select>
                   <option value="">Select CPU Option</option>
                   {cpu.map(cpu => (
@@ -216,7 +216,7 @@ const Custom = () => {
 
             <div>
               <Form.Group className="mb-3">
-                <Form.Label>Nguồn</Form.Label>
+                <Form.Label class="text-danger">Nguồn</Form.Label>
                 <Form.Select>
                   <option value="">Select an option</option>
                   {psu.map(psu => (
@@ -228,7 +228,7 @@ const Custom = () => {
 
             <div>
               <Form.Group className="mb-3">
-                <Form.Label>VGA</Form.Label>
+                <Form.Label class="text-danger">VGA</Form.Label>
                 <Form.Select>
                   <option value="">Select VGA option</option>
                   {vga.map(vga => (
@@ -241,7 +241,7 @@ const Custom = () => {
 
             <div>
               <Form.Group className="mb-3">
-                <Form.Label>Lưu trữ</Form.Label>
+                <Form.Label class="text-danger">Lưu trữ</Form.Label>
                 <Form.Select>
                   <option value="">Select SSD option</option>
                   {luutru.map(luutru => (
@@ -253,7 +253,7 @@ const Custom = () => {
 
             <div>
               <Form.Group className="mb-3">
-                <Form.Label>Main</Form.Label>
+                <Form.Label class="text-danger">Main</Form.Label>
                 <Form.Select>
                   <option value="">Select Main option</option>
                   {bomachchu.map(bomachchu => (
@@ -264,7 +264,7 @@ const Custom = () => {
             </div>
             <div>
               <Form.Group className="mb-3">
-                <Form.Label>Tản nhiệt CPU</Form.Label>
+                <Form.Label class="text-danger">Tản nhiệt CPU</Form.Label>
                 <Form.Select>
                   <option value="">Select FAN option</option>
                   {tannhiet.map(tannhiet => (
@@ -276,7 +276,7 @@ const Custom = () => {
 
             <div>
               <Form.Group className="mb-3">
-                <Form.Label>Case</Form.Label>
+                <Form.Label class="text-danger">Case</Form.Label>
                 <Form.Select>
                   <option value="">Select CASE option</option>
                   {casePC.map(casePC => (
