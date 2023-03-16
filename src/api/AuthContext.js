@@ -1,14 +1,12 @@
-import { useContext, createContext, useEffect, useState } from 'react';
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged,
-} from 'firebase/auth';
-import { auth } from 'src/firebase';
-// import * as firebase from 'firebase'
+
+
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import { createContext, useContext, useEffect, useState } from "react";
+import { auth } from "../firebase";
+
+
 const AuthContext = createContext();
-// eslint-disable-next-line react/prop-types
+
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({})
   const [accessToken, setAccessToken] = useState('')
