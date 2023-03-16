@@ -1,0 +1,11 @@
+
+.input-sort {
+    width: 20%;
+    border: 1px solid #666;
+    border-radius: 3px;
+    padding: .3rem 1rem;
+}
+
+.form-sort {
+    text-align: right;
+}

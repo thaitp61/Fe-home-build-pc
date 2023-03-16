@@ -14,6 +14,7 @@ import AppCheckout from './components/AppCheckout';
 import ProductByCategory from "./components/ProductByCategory"
 import Custom from "./pages/Custom"
 import Login from './pages/Login';
+import ProductCategoryID from './components/ProductCategoryID';
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
             <Route path="cart/" element={<AppCart />} />
             <Route path="checkout/" element={<AppCheckout />} />
             <Route path="custom-pc/" element={<Custom />} />
-            <Route path="product-category/:categoryID/" element={<ProductByCategory />} />
+            <Route path="product-category/:categoryTypeID/" element={<ProductByCategory />} />
+            <Route path="product-category/:categoryTypeID/:categoryID/" element={<ProductCategoryID />} />
             <Route path="contact" element={<Contact />} />
             <Route path="login" element={<Login/>} />
           </Route>

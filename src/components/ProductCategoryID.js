@@ -14,15 +14,15 @@ import {
   MDBRipple,
 } from "mdb-react-ui-kit";
 import Product from "./Product";
-const ProductByCategory = () => {
+const ProductCategoryID = () => {
   const [products, setProducts] = useState([]);
-  const { categoryTypeID } = useParams("lapgaming");
+  const { categoryID } = useParams();
 
   useEffect(() => {
     // Gọi API lấy danh sách sản phẩm theo categoryID
-    axios.get(`https://server-buildingpc.herokuapp.com/component/componentListByCategoryTypeID?categoryTypeID=${categoryTypeID}`)
+    axios.get(`https://server-buildingpc.herokuapp.com/component/componentListByCategoryID?categoryID=${categoryID}`)
       .then(response => setProducts(response.data));
-  }, [categoryTypeID]);
+  }, [categoryID]);
 
   return (
     <MDBContainer fluid className="my-5 text-center">
@@ -30,7 +30,7 @@ const ProductByCategory = () => {
         <strong></strong>
       </h1>
       <div>
-        <div className="row" >
+        <div className="row">
           {products.map(component => (
             <MDBCol md="12" lg="3" className="mb-4">
               <Link key={component.componentID} to={`/product/${component.componentID}`} >
@@ -47,4 +47,4 @@ const ProductByCategory = () => {
   );
 }
 
-export default ProductByCategory
+export default ProductCategoryID
