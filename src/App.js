@@ -11,9 +11,10 @@ import Contact from './pages/Contact';
 import ComponentDetail from './components/ProductDetail';
 import AppCart from './components/AppCart';
 import AppCheckout from './components/AppCheckout';
-import Custom from './pages/Custom';
+import ProductByCategory from "./components/ProductByCategory"
+import Custom from "./pages/Custom"
 import Login from './pages/Login';
-
+import ProductCategoryID from './components/ProductCategoryID';
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
             <Route path="cart/" element={<AppCart />} />
             <Route path="checkout/" element={<AppCheckout />} />
             <Route path="custom-pc/" element={<Custom />} />
+            <Route path="product-category/:categoryTypeID/" element={<ProductByCategory />} />
+            <Route path="product-category/:categoryTypeID/:categoryID/" element={<ProductCategoryID />} />
             <Route path="contact" element={<Contact />} />
             <Route path="login" element={<Login/>} />
           </Route>
