@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
-import { FaCartPlus } from "react-icons/fa";
+import { FaCartPlus, FaShoppingCart } from "react-icons/fa";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import "../css/ProductDetail.css"
 import {
   MDBBtn,
@@ -82,6 +83,13 @@ const ComponentDetail = () => {
                 <FaCartPlus className="cart-icon" />
                 Add to cart
               </Button>
+              &ensp;
+              <Link to="/checkout/">
+              <Button variant="primary" className="add-to-cart-btn" onClick={() => addToCart({ userID: 'PhuongThai', componentID: id, amount: quantity, })}>
+                <FaShoppingCart className="cart-icon" />
+                Buy Now
+              </Button>
+              </Link>
             </div>
           </Col>
         </Row>

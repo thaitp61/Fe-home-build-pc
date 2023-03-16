@@ -176,7 +176,7 @@ const Custom = () => {
         <strong></strong>
       </h4>
       <div>
-        <h1>TỰ LỰA CHỌN CẤU HÌNH PC</h1>
+        <h1 class="alert alert-info clearfix">TỰ LỰA CHỌN CẤU HÌNH PC</h1>
         <Form.Group className="mb-3">
           <Form.Label class="text-danger">Nền tảng</Form.Label>
           <Form.Select value={selectedOption} onChange={handleSelectChange} >

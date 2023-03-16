@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -6,9 +7,21 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { FaShoppingCart,FaSignInAlt } from "react-icons/fa";
+import { FaShoppingCart, FaSignInAlt } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const AppHeader = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const history = useNavigate();
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    history.push(`/search?s=${searchQuery}`);
+  };
   return (
     <div>
       <Navbar bg="dark" variant={"dark"} expand="lg">
@@ -41,7 +54,7 @@ const AppHeader = () => {
                 <NavDropdown.Item as={Link} to="/product-category/manhinh/screen/">Màn hình văn phòng</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/product-category/manhinh/">Xem tất cả</NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown  title="Phụ kiện" id="basic-nav-dropdown">
+              <NavDropdown title="Phụ kiện" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#">Đế tản nhiệt</NavDropdown.Item>
                 <NavDropdown.Item href="#">Phụ kiện PC</NavDropdown.Item>
                 <NavDropdown.Item href="#">Thiết bị mạng</NavDropdown.Item>
@@ -51,14 +64,18 @@ const AppHeader = () => {
             </Nav>
 
           </Navbar.Collapse>
-          <Form className="d-flex">
+          <Form className="d-flex" onSubmit={handleSearchSubmit}>
             <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              value={searchQuery}
+              onChange={handleSearchChange}
             />
-            <Button variant="outline-success">Search</Button>
+            <Link to={`/search/${searchQuery}`}>
+              <Button variant="outline-success" type="submit">Search</Button>
+            </Link>
           </Form>
           <Nav>
             <Nav.Link as={Link} to="/cart/">

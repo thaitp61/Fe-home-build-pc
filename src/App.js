@@ -15,6 +15,7 @@ import ProductByCategory from "./components/ProductByCategory"
 import Custom from "./pages/Custom"
 import Login from './pages/Login';
 import ProductCategoryID from './components/ProductCategoryID';
+import AppSearch from './components/AppSearch';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="custom-pc/" element={<Custom />} />
             <Route path="product-category/:categoryTypeID/" element={<ProductByCategory />} />
             <Route path="product-category/:categoryTypeID/:categoryID/" element={<ProductCategoryID />} />
+            <Route path="/search/:searchQuery" element={<AppSearch />} />
             <Route path="contact" element={<Contact />} />
             <Route path="login" element={<Login/>} />
           </Route>

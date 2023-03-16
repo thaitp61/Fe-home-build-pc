@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const AppCheckout = () => {
     const [formData, setFormData] = useState({
@@ -82,7 +83,7 @@ const AppCheckout = () => {
                                             <h6 className="my-0">{bill.componentName}</h6>
                                             <small className="text-muted">Số lượng: {bill.amount}</small>
                                         </div>
-                                        <span className="text-muted">{bill.price}</span>
+                                        <span className="text-muted">{bill.price.toLocaleString('vi-VN')}</span>
                                     </li>
 
                                 </div>
@@ -96,7 +97,7 @@ const AppCheckout = () => {
                                 </li>
                                 <li className="list-group-item d-flex justify-content-between">
                                     <span>Total (VND)</span>
-                                    <strong>{bills?.[0]?.total}  VNĐ</strong>
+                                    <strong>{bills?.[0]?.total.toLocaleString('vi-VN')}  VNĐ</strong>
                                 </li>
                             </div>
                         </ul>
@@ -247,7 +248,9 @@ const AppCheckout = () => {
                                 </div>
                             </div>
                             <hr class="mb-4" />
+                            <Link to="/">
                             <button class="btn btn-primary btn-lg btn-block" type="button" onClick={handleOrder}>Đặt hàng</button>
+                            </Link>
                         </form>
                     </div>
                 </div>
