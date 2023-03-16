@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+
 import { message } from 'antd';
 import React, { useEffect, } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
