@@ -1,9 +1,76 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
+import React, { useEffect, useState } from 'react'
+import { UserAuth } from '../api/AuthContext';
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
+const Login = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
+  };
+  const { user, googleSignIn, accessToken } = UserAuth()
+  console.log(user)
+  const navigate = useNavigate()
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn()
+      if (accessToken) {
+        const idToken = await user.getIdToken();
+        const response = await axios.post(
+          'https://server-buildingpc.herokuapp.com/user/token/google',
+         {
+             accessToken: accessToken },
+             {  headers: {
+              Authorization: `Bearer ${idToken}`
+         },
+         }
+        )
+        if (response.status == 200) {
+          console.log(
+            "🚀 ~ file: Login.js:53 ~ handleGoogleSignIn ~ response:",
+            response.data.User.roleName
+          );
+          localStorage.setItem('access_token', JSON.stringify(response.data))
+          response.data.User.roleName !== "ROLE_USER"
+            ? navigate("/dashbroad")
+            : navigate("/");
+          // localStorage.setItem('refresh_token', response.data.body.refresh_token)
+          // navigate('/dashbroad')
+        } else {
+          localStorage.removeItem('access_token')
+          // localStorage.removeItem('refresh_token')
+        }
+      } else {
+        console.log('Access token not found')
+      }
+    } catch (error) {
+      console.log('error', error)
+    }
 
+  }
 
-const App = () => {
-    
+  useEffect(() => {
+    const accessTokenString = localStorage.getItem("access_token");
+    let accessToken = null;
+    if (typeof accessTokenString === "string" && accessTokenString !== "") {
+      accessToken = JSON.parse(accessTokenString);
+    }
+    let userData = null;
+    const userDataString = JSON.parse(localStorage.getItem("access_token"));
+    if(typeof userDataString ==="string" && userDataString !== ""){
+      userData = JSON.parse(userDataString);
+    }
+    if (accessToken && userData &&  userData.roleName !=="") {
+      navigate("/home");
+    } else {
+      navigate("");
+    }
+  }, [navigate]);
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
   };
@@ -61,4 +128,4 @@ const App = () => {
     </Form>
   );
 };
-export default App;
+export default Login ;
