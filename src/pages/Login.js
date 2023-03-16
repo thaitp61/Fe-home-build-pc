@@ -1,18 +1,19 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 import React, { useEffect, useState } from 'react'
-import { UserAuth } from '../api/AuthContext';
-import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import { UserAuth } from '../api/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import GoogleButton from 'react-google-button';
 const Login = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   console.log({
+  //     email: data.get('email'),
+  //     password: data.get('password'),
+  //   });
+  // };
   const { user, googleSignIn, accessToken } = UserAuth()
   console.log(user)
   const navigate = useNavigate()
@@ -75,57 +76,85 @@ const Login = () => {
     console.log('Received values of form: ', values);
   };
   return (
-    <Form
-      name="normal_login"
-      className="login-form"
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-    >
-      <Form.Item
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your Username!',
-          },
-        ]}
-      >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your Password!',
-          },
-        ]}
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"
-        />
-      </Form.Item>
-      <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
+    // <Form
+    //   name="normal_login"
+    //   className="login-form"
+    //   initialValues={{
+    //     remember: true,
+    //   }}
+    //   onFinish={onFinish}
+    // >
+    //   <Form.Item
+    //     name="username"
+    //     rules={[
+    //       {
+    //         required: true,
+    //         message: 'Please input your Username!',
+    //       },
+    //     ]}
+    //   >
+    //     <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+    //   </Form.Item>
+    //   <Form.Item
+    //     name="password"
+    //     rules={[
+    //       {
+    //         required: true,
+    //         message: 'Please input your Password!',
+    //       },
+    //     ]}
+    //   >
+    //     <Input
+    //       prefix={<LockOutlined className="site-form-item-icon" />}
+    //       type="password"
+    //       placeholder="Password"
+    //     />
+    //   </Form.Item>
+    //   <Form.Item>
+    //     <Form.Item name="remember" valuePropName="checked" noStyle>
+    //       <Checkbox>Remember me</Checkbox>
+    //     </Form.Item>
 
-        <a className="login-form-forgot" href="">
-          Forgot password hello
-        </a>
-      </Form.Item>
-
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
-          Log in
-        </Button>
-        Or <a href="">register now!</a>
-      </Form.Item>
-    </Form>
+    //     <a className="login-form-forgot" href="">
+    //       Forgot password hello
+    //     </a>
+    //   </Form.Item>
+    //   <Button
+    //             type="submit"
+    //             fullWidth
+    //             variant="contained"
+    //             sx={{ mt: 3, mb: 2 }}
+    //             onClick={handleGoogleSignIn}
+    //           >
+    //             Login with google
+    //           </Button>
+    //   <Form.Item>
+    //     <Button type="primary" htmlType="submit" className="login-form-button">
+    //       Log in
+    //     </Button>
+    //     Or <a href="">register now!</a>
+    //   </Form.Item>
+    // </Form>
+        <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+     <div className='login-body'>
+    <div className="container" id="container">
+        <div class="form-container log-in-container">
+            <form action="#">
+            <div className="max-w-[240px] m-auto py-4">
+                      <GoogleButton onClick={handleGoogleSignIn} />
+                    </div>
+            </form >
+        </div>
+        <div className="overlay-container">
+            <div className="overlay">
+                <div className="overlay-panel overlay-right">
+                    <img src='https://www.tncstore.vn/image/catalog/BAI%20VIET/PC%20Gaming%20m%E1%BB%9Bi/partner01%20(1).jpg' />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
   );
 };
 export default Login ;
