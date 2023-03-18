@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
+import { FaCartPlus, FaShoppingCart } from "react-icons/fa";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Link } from 'react-router-dom';
+import InputNumber from 'react-input-number';
+
 import {
   MDBContainer,
   MDBRow,
@@ -7,11 +12,11 @@ import {
   MDBCard,
   MDBCardBody,
   MDBCardImage,
+  MDBInput,
   MDBIcon,
   MDBBtn,
   MDBRipple,
 } from "mdb-react-ui-kit";
-import Form from 'react-bootstrap/Form';
 
 const Custom = () => {
   const [selectedOption, setSelectedOption] = useState('');
@@ -19,6 +24,20 @@ const Custom = () => {
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
   };
+  const [value, setValue] = useState(1);
+
+  const handleChange = event => {
+    setValue(event.target.value);
+  };
+
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const handleProductSelect = (componentID, price) => {
+    setSelectedProducts([...selectedProducts, { componentID, price }]);
+    setTotalPrice(totalPrice + price);
+  };
+
 
   const [rams, setRams] = useState([]);
   const [cpu, setCpu] = useState([]);
@@ -28,7 +47,6 @@ const Custom = () => {
   const [vga, setVga] = useState([]);
   const [luutru, setLuutru] = useState([]);
   const [casePC, setCasePC] = useState([]);
-
   useEffect(() => {
     // RAM API
     const ramRequestBody = {
@@ -171,10 +189,12 @@ const Custom = () => {
 
   }, [selectedOption])
   return (
+
     <MDBContainer fluid className="my-5 text-center">
       <h4 className="mt-4 mb-5">
         <strong></strong>
       </h4>
+
       <div>
         <h1 class="alert alert-info clearfix">TỰ LỰA CHỌN CẤU HÌNH PC</h1>
         <Form.Group className="mb-3">
@@ -192,7 +212,16 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">RAM</Form.Label>
-                <Form.Select>
+                <Form.Select onChange={(e) => {
+
+                  const ram = rams.find(((x) => {
+                    return x.componentID == e.target.value
+                  }))
+
+
+                  handleProductSelect(e.target.value, ram.price)
+
+                }}>
                   <option value="">Select Ram Option</option>
                   {rams.map(ram => (
                     <option key={ram.componentID} value={ram.componentID}>{ram.componentName} ( + {ram.price.toLocaleString('vi-VN')} VNĐ)</option>
@@ -204,7 +233,9 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">CPU</Form.Label>
-                <Form.Select>
+                <Form.Select onChange={(e) => handleProductSelect(e.target.value, cpuPrice)}>
+
+                
                   <option value="">Select CPU Option</option>
                   {cpu.map(cpu => (
                     <option key={cpu.componentID} value={cpu.componentID}>{cpu.componentName} ( + {cpu.price.toLocaleString('vi-VN')} VNĐ)</option>
@@ -217,7 +248,7 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">Nguồn</Form.Label>
-                <Form.Select>
+                <Form.Select onChange={(e) => handleProductSelect(e.target.value, psuPrice)}>
                   <option value="">Select an option</option>
                   {psu.map(psu => (
                     <option value={psu.componentID}>{psu.componentName} ( + {psu.price.toLocaleString('vi-VN')} VNĐ)</option>
@@ -229,7 +260,7 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">VGA</Form.Label>
-                <Form.Select>
+                <Form.Select onChange={(e) => handleProductSelect(e.target.value, vgaPrice)}>
                   <option value="">Select VGA option</option>
                   {vga.map(vga => (
                     <option value={vga.componentID}>{vga.componentName} ( + {vga.price.toLocaleString('vi-VN')} VNĐ)</option>
@@ -242,7 +273,7 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">Lưu trữ</Form.Label>
-                <Form.Select>
+                <Form.Select onChange={(e) => handleProductSelect(e.target.value, luutruPrice)}>
                   <option value="">Select SSD option</option>
                   {luutru.map(luutru => (
                     <option value={luutru.componentID}>{luutru.componentName} ( + {luutru.price.toLocaleString('vi-VN')} VNĐ)</option>
@@ -254,7 +285,7 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">Main</Form.Label>
-                <Form.Select>
+                <Form.Select onChange={(e) => handleProductSelect(e.target.value, bomachchuPrice)}>
                   <option value="">Select Main option</option>
                   {bomachchu.map(bomachchu => (
                     <option value={bomachchu.componentID}>{bomachchu.componentName} ( + {bomachchu.price.toLocaleString('vi-VN')} VNĐ)</option>
@@ -265,7 +296,7 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">Tản nhiệt CPU</Form.Label>
-                <Form.Select>
+                <Form.Select >
                   <option value="">Select FAN option</option>
                   {tannhiet.map(tannhiet => (
                     <option value={tannhiet.componentID}>{tannhiet.componentName} ( + {tannhiet.price.toLocaleString('vi-VN')} VNĐ)</option>
@@ -288,12 +319,31 @@ const Custom = () => {
 
           </>
         )}
-
       </div>
+      <li className="list-group-item d-flex justify-content-between">
+        <span>Total (VND)</span>
+        <strong>{totalPrice.toLocaleString('vi-VN')}  VNĐ</strong>
+      </li>
+      <input
+        type="number"
+        placeholder="Your fav number"
+        value={value}
+        onChange={handleChange}
+      />
+      &ensp;
+      <Button variant="primary" className="add-to-cart-btn" >
+        <FaCartPlus className="cart-icon" />
+        Add to cart
+      </Button>
+      &ensp;
+      <Link to="/checkout/">
+        <Button variant="primary" className="add-to-cart-btn" >
+          <FaShoppingCart className="cart-icon" />
+          Buy Now
+        </Button>
+      </Link>
 
-    </MDBContainer >
-
-
+    </MDBContainer>
   );
 }
 
