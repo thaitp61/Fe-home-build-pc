@@ -1,21 +1,21 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Routes, Route, } from "react-router-dom";
-import AppLayout from './components/AppLayout';
-import Home from "./pages/Home"
-import AppHome from './components/AppHome';
+import AppLayout from './home/components/AppLayout';
+import Home from "./home/pages/Home"
+import AppHome from './home/components/AppHome';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import ComponentDetail from './components/ProductDetail';
-import AppCart from './components/AppCart';
-import AppCheckout from './components/AppCheckout';
-import ProductByCategory from "./components/ProductByCategory"
-import Custom from "./pages/Custom"
+import About from './home/pages/About';
+import Contact from './home/pages/Contact';
+import ComponentDetail from './home/components/ProductDetail';
+import AppCart from './home/components/AppCart';
+import AppCheckout from './home/components/AppCheckout';
+import ProductByCategory from "./home/components/ProductByCategory"
+import Custom from "./home/pages/Custom"
 
-import ProductCategoryID from './components/ProductCategoryID';
-import AppSearch from './components/AppSearch';
+import ProductCategoryID from './home/components/ProductCategoryID';
+import AppSearch from './home/components/AppSearch';
 import Login from './home/pages/Login';
 
 function App() {
