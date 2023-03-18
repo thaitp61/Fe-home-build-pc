@@ -32,50 +32,6 @@ const Custom = () => {
 
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [productPrices, setProductPrices] = useState(
-    {
-    ramPrice: 0,
-    cpuPrice: 0,
-    psuPrice: 0,
-    vgaPrice: 0,
-    luutruPrice: 0,
-    bomachchuPrice: 0,
-    tannhietPrice: 0,
-    casePCPrice: 0
-  }
-  );
-
-  // const handleProductSelect = (componentID, price) => {
-  //   setSelectedProducts([...selectedProducts, { componentID, price }]);
-  //   setTotalPrice(totalPrice + price);
-  // };
-  // const handleProductSelect = (componentID, price) => {
-  //   setProductPrices(prevState => ({
-  //     ...prevState,
-  //     [componentID]: price
-  //   }));
-  //   setTotalPrice(prevTotalPrice => prevTotalPrice + price);
-
-  // };
-
-  // const [selectedProducts, setSelectedProducts] = useState([]);
-  // const [totalPrice, setTotalPrice] = useState(0);
-  // function handleProductSelect(product) {
-  //   const isProductSelected = selectedProducts.some(
-  //     (selectedProduct) => selectedProduct.componentID === product.componentID
-  //   );
-
-  //   if (isProductSelected) {
-  //     const updatedSelectedProducts = selectedProducts.filter(
-  //       (selectedProduct) => selectedProduct.componentID !== product.componentID
-  //     );
-  //     setSelectedProducts(updatedSelectedProducts);
-  //     setTotalPrice(totalPrice - product.price);
-  //   } else {
-  //     setSelectedProducts([...selectedProducts, product]);
-  //     setTotalPrice(totalPrice + product.price);
-  //   }
-  // }
   const handleProductSelect = (product, price) => {
     const newSelectedProducts = [...selectedProducts];
     const existingProductIndex = newSelectedProducts.findIndex(
