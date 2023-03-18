@@ -30,13 +30,68 @@ const Custom = () => {
     setValue(event.target.value);
   };
 
-
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const handleProductSelect = (componentID, price) => {
-    setSelectedProducts([...selectedProducts, { componentID, price }]);
-    setTotalPrice(totalPrice + price);
+  const [productPrices, setProductPrices] = useState(
+    {
+    ramPrice: 0,
+    cpuPrice: 0,
+    psuPrice: 0,
+    vgaPrice: 0,
+    luutruPrice: 0,
+    bomachchuPrice: 0,
+    tannhietPrice: 0,
+    casePCPrice: 0
+  }
+  );
+
+  // const handleProductSelect = (componentID, price) => {
+  //   setSelectedProducts([...selectedProducts, { componentID, price }]);
+  //   setTotalPrice(totalPrice + price);
+  // };
+  // const handleProductSelect = (componentID, price) => {
+  //   setProductPrices(prevState => ({
+  //     ...prevState,
+  //     [componentID]: price
+  //   }));
+  //   setTotalPrice(prevTotalPrice => prevTotalPrice + price);
+
+  // };
+
+  // const [selectedProducts, setSelectedProducts] = useState([]);
+  // const [totalPrice, setTotalPrice] = useState(0);
+  // function handleProductSelect(product) {
+  //   const isProductSelected = selectedProducts.some(
+  //     (selectedProduct) => selectedProduct.componentID === product.componentID
+  //   );
+
+  //   if (isProductSelected) {
+  //     const updatedSelectedProducts = selectedProducts.filter(
+  //       (selectedProduct) => selectedProduct.componentID !== product.componentID
+  //     );
+  //     setSelectedProducts(updatedSelectedProducts);
+  //     setTotalPrice(totalPrice - product.price);
+  //   } else {
+  //     setSelectedProducts([...selectedProducts, product]);
+  //     setTotalPrice(totalPrice + product.price);
+  //   }
+  // }
+  const handleProductSelect = (product, price) => {
+    const newSelectedProducts = [...selectedProducts];
+    const existingProductIndex = newSelectedProducts.findIndex(
+      (item) => item.product === product
+    );
+    if (existingProductIndex >= 0) {
+      newSelectedProducts[existingProductIndex].price = price;
+    } else {
+      newSelectedProducts.push({ product, price });
+    }
+    setSelectedProducts(newSelectedProducts);
+    setTotalPrice(
+      newSelectedProducts.reduce((total, item) => total + item.price, 0)
+    );
   };
+
 
 
   const [rams, setRams] = useState([]);
@@ -212,19 +267,22 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">RAM</Form.Label>
-                <Form.Select onChange={(e) => {
+                <Form.Select onChange={(e) =>
+                  //  {
 
-                  const ram = rams.find(((x) => {
-                    return x.componentID == e.target.value
-                  }))
+                  //   const ram = rams.find(((x) => {
+                  //     return x.componentID == e.target.value
+                  //   }))
 
 
-                  handleProductSelect(e.target.value, ram.price)
+                  handleProductSelect("RAM", Number(e.target.value))
 
-                }}>
+                  // }
+                }
+                >
                   <option value="">Select Ram Option</option>
                   {rams.map(ram => (
-                    <option key={ram.componentID} value={ram.componentID}>{ram.componentName} ( + {ram.price.toLocaleString('vi-VN')} VNĐ)</option>
+                    <option key={ram.componentID} value={ram.price}>{ram.componentName} ( + {ram.price.toLocaleString('vi-VN')} VNĐ)</option>
                   ))}
                 </Form.Select>
               </Form.Group>
@@ -233,12 +291,12 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">CPU</Form.Label>
-                <Form.Select onChange={(e) => handleProductSelect(e.target.value, cpuPrice)}>
+                <Form.Select onChange={(e) => handleProductSelect("CPU", Number(e.target.value))}>
 
-                
+
                   <option value="">Select CPU Option</option>
                   {cpu.map(cpu => (
-                    <option key={cpu.componentID} value={cpu.componentID}>{cpu.componentName} ( + {cpu.price.toLocaleString('vi-VN')} VNĐ)</option>
+                    <option key={cpu.componentID} value={cpu.price}>{cpu.componentName} ( + {cpu.price.toLocaleString('vi-VN')} VNĐ)</option>
                   ))}
                 </Form.Select>
               </Form.Group>
@@ -248,10 +306,10 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">Nguồn</Form.Label>
-                <Form.Select onChange={(e) => handleProductSelect(e.target.value, psuPrice)}>
+                <Form.Select onChange={(e) => handleProductSelect("PSU", Number(e.target.value))}>
                   <option value="">Select an option</option>
                   {psu.map(psu => (
-                    <option value={psu.componentID}>{psu.componentName} ( + {psu.price.toLocaleString('vi-VN')} VNĐ)</option>
+                    <option key={psu.componentID}  value={psu.price}>{psu.componentName} ( + {psu.price.toLocaleString('vi-VN')} VNĐ)</option>
                   ))}
                 </Form.Select>
               </Form.Group>
@@ -260,10 +318,10 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">VGA</Form.Label>
-                <Form.Select onChange={(e) => handleProductSelect(e.target.value, vgaPrice)}>
+                <Form.Select onChange={(e) => handleProductSelect("VGA", Number(e.target.value))}>
                   <option value="">Select VGA option</option>
                   {vga.map(vga => (
-                    <option value={vga.componentID}>{vga.componentName} ( + {vga.price.toLocaleString('vi-VN')} VNĐ)</option>
+                    <option key={vga.componentID}  value={vga.price}>{vga.componentName} ( + {vga.price.toLocaleString('vi-VN')} VNĐ)</option>
                   ))}
                 </Form.Select>
               </Form.Group>
@@ -273,10 +331,10 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">Lưu trữ</Form.Label>
-                <Form.Select onChange={(e) => handleProductSelect(e.target.value, luutruPrice)}>
+                <Form.Select onChange={(e) => handleProductSelect("LUUTRU", Number(e.target.value))}>
                   <option value="">Select SSD option</option>
                   {luutru.map(luutru => (
-                    <option value={luutru.componentID}>{luutru.componentName} ( + {luutru.price.toLocaleString('vi-VN')} VNĐ)</option>
+                    <option key={luutru.componentID} value={luutru.price}>{luutru.componentName} ( + {luutru.price.toLocaleString('vi-VN')} VNĐ)</option>
                   ))}
                 </Form.Select>
               </Form.Group>
@@ -285,10 +343,10 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">Main</Form.Label>
-                <Form.Select onChange={(e) => handleProductSelect(e.target.value, bomachchuPrice)}>
+                <Form.Select onChange={(e) => handleProductSelect("BOMACHCHU", Number(e.target.value))}>
                   <option value="">Select Main option</option>
                   {bomachchu.map(bomachchu => (
-                    <option value={bomachchu.componentID}>{bomachchu.componentName} ( + {bomachchu.price.toLocaleString('vi-VN')} VNĐ)</option>
+                    <option  key={bomachchu.componentID}  value={bomachchu.price}>{bomachchu.componentName} ( + {bomachchu.price.toLocaleString('vi-VN')} VNĐ)</option>
                   ))}
                 </Form.Select>
               </Form.Group>
@@ -296,10 +354,10 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">Tản nhiệt CPU</Form.Label>
-                <Form.Select >
+                <Form.Select onChange={(e) => handleProductSelect("TANNHIET", Number(e.target.value))}>
                   <option value="">Select FAN option</option>
                   {tannhiet.map(tannhiet => (
-                    <option value={tannhiet.componentID}>{tannhiet.componentName} ( + {tannhiet.price.toLocaleString('vi-VN')} VNĐ)</option>
+                    <option key={tannhiet.componentID}  value={tannhiet.price}>{tannhiet.componentName} ( + {tannhiet.price.toLocaleString('vi-VN')} VNĐ)</option>
                   ))}
                 </Form.Select>
               </Form.Group>
@@ -308,10 +366,10 @@ const Custom = () => {
             <div>
               <Form.Group className="mb-3">
                 <Form.Label class="text-danger">Case</Form.Label>
-                <Form.Select>
+                <Form.Select onChange={(e) => handleProductSelect("CASEPC", Number(e.target.value))}>
                   <option value="">Select CASE option</option>
                   {casePC.map(casePC => (
-                    <option value={casePC.componentID}>{casePC.componentName} ( + {casePC.price.toLocaleString('vi-VN')} VNĐ)</option>
+                    <option key={casePC.componentID}  value={casePC.price}>{casePC.componentName} ( + {casePC.price.toLocaleString('vi-VN')} VNĐ)</option>
                   ))}
                 </Form.Select>
               </Form.Group>
