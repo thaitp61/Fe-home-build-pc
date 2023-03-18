@@ -13,9 +13,10 @@ import AppCart from './components/AppCart';
 import AppCheckout from './components/AppCheckout';
 import ProductByCategory from "./components/ProductByCategory"
 import Custom from "./pages/Custom"
-import Login from './pages/Login';
+
 import ProductCategoryID from './components/ProductCategoryID';
 import AppSearch from './components/AppSearch';
+import Login from './home/pages/Login';
 
 function App() {
   return (
