@@ -174,8 +174,8 @@ const AppCart = ({ }) => {
                             <MDBCol md="2" lg="2" xl="2">
 
                               <MDBCardImage
-                                // src={item?.image}
-                                src="https://file.hstatic.net/200000536009/collection/pc_gaming_core_i7_a89473a0ce934d868844387097dca141.jpg"
+                                src={item?.image}
+                                // src="https://file.hstatic.net/200000536009/collection/pc_gaming_core_i7_a89473a0ce934d868844387097dca141.jpg"
                                 fluid className="rounded-3" style={{ width: "100px" }}
                                 alt="image item" />
 
