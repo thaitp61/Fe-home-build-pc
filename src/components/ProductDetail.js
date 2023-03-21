@@ -85,10 +85,10 @@ const ComponentDetail = () => {
               </Button>
               &ensp;
               <Link to="/checkout/">
-              <Button variant="primary" className="add-to-cart-btn" onClick={() => addToCart({ userID: 'PhuongThai', componentID: id, amount: quantity, })}>
-                <FaShoppingCart className="cart-icon" />
-                Buy Now
-              </Button>
+                <Button variant="primary" className="add-to-cart-btn" onClick={() => addToCart({ userID: 'PhuongThai', componentID: id, amount: quantity, })}>
+                  <FaShoppingCart className="cart-icon" />
+                  Buy Now
+                </Button>
               </Link>
             </div>
           </Col>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios";
 import { FaCartPlus, FaShoppingCart } from "react-icons/fa";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import {  Button, Form } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 
 import {

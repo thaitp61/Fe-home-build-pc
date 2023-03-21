@@ -3,6 +3,9 @@ import { Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import SuccessPopup from './SuccessPopup';
+import { BrowserRouter, Switch, Route, useNavigate } from "react-router-dom";
+import { Navigate } from 'react-router-dom';
 
 const AppCheckout = () => {
     const [formData, setFormData] = useState({
@@ -29,6 +32,21 @@ const AppCheckout = () => {
     //     e.preventDefault();
     //     console.log(formData);
     // };
+    const [redirect, setRedirect] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const history = useNavigate();
+
+    const handleClosePopup = () => {
+        setIsSuccess(false);
+        setRedirect(true);
+    };
+
+    const handleOrder = () => {
+        // Xử lý khi đặt hàng thành công
+        setIsSuccess(true);
+
+
+    };
     const [bills, setBills] = useState([]);
 
     useEffect(() => {
@@ -44,7 +62,7 @@ const AppCheckout = () => {
                 console.log(error);
             });
     }, []);
-    function handleOrder() {
+    function handleOrder1() {
         const data = {
             userID: 'PhuongThai'
         };
@@ -248,9 +266,9 @@ const AppCheckout = () => {
                                 </div>
                             </div>
                             <hr class="mb-4" />
-                            <Link to="/">
                             <button class="btn btn-primary btn-lg btn-block" type="button" onClick={handleOrder}>Đặt hàng</button>
-                            </Link>
+                            {isSuccess && <SuccessPopup onClose={handleClosePopup} />}
+                            {redirect && <Navigate to="/" />}
                         </form>
                     </div>
                 </div>

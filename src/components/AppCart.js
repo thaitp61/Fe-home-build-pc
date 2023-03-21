@@ -35,13 +35,36 @@ const AppCart = ({ }) => {
 
   const removeComponent = async (componentID, userID) => {
     try {
-      const response = await fetch('https://server-buildingpc.herokuapp.com/cart/removecomponent', {
+      const response = await fetch('https://server-buildingpc.herokuapp.com/cart/remove', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           componentID: componentID,
+          userID: userID
+        })
+      });
+      if (response.ok) {
+        console.log('Đã xóa sản phẩm khỏi giỏ hàng');
+        // gọi hàm getCart để cập nhật danh sách giỏ hàng
+        fetchCartItems();
+      } else {
+        console.log('Lỗi xóa sản phẩm khỏi giỏ hàng');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const removeProduct = async (productID, userID) => {
+    try {
+      const response = await fetch('https://server-buildingpc.herokuapp.com/cart/remove', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          productID: productID,
           userID: userID
         })
       });
@@ -131,7 +154,7 @@ const AppCart = ({ }) => {
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <div>
                         <p className="mb-1">Shopping cart</p>
-                        <b className="mb-0">You have {cartItems?.TotalQuantity} items in your cart</b>
+                        <b className="mb-0">You have {cartItems?.totalQuantity} items in your cart</b>
                       </div>
                       <div>
                         <p>
@@ -243,7 +266,7 @@ const AppCart = ({ }) => {
                                  {(item.total * item.amount).toLocaleString('vi-VN')} VNĐ
                               </MDBTypography>
                             </MDBCol>
-                            <MDBCol md="1" lg="1" xl="1" className="text-end" onClick={() => removeComponent(item?.productID, "PhuongThai")} >
+                            <MDBCol md="1" lg="1" xl="1" className="text-end" onClick={() => removeProduct(item?.productID, "PhuongThai")} >
                               <a className="text-danger">
                                 <MDBIcon fas icon="trash text-danger" size="lg" />
                               </a>
