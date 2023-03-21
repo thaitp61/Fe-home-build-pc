@@ -263,7 +263,10 @@ const AppCart = ({ }) => {
                             </MDBCol>
                             <MDBCol md="3" lg="2" xl="2" className="offset-lg-1">
                               <MDBTypography tag="h5" className="mb-0 text-primary" >
-                                 {(item.total * item.amount).toLocaleString('vi-VN')} VNĐ
+                                 {(item.total * item.amount).toLocaleString('vi-VN')} 
+                                 
+                                 
+                                 VNĐ
                               </MDBTypography>
                             </MDBCol>
                             <MDBCol md="1" lg="1" xl="1" className="text-end" onClick={() => removeProduct(item?.productID, "PhuongThai")} >
@@ -284,17 +287,24 @@ const AppCart = ({ }) => {
 
                         <div className="d-flex justify-content-between">
                           <p className="mb-2">Subtotal</p>
-                          <p className="mb-2">{(cartItems.TotalPrice)} VNĐ</p>
+                          <p className="mb-2">
+                          {/* {(cartItems.TotalPrice)}  */}30,000
+                          VNĐ</p>
                         </div>
 
                         <div className="d-flex justify-content-between">
                           <p className="mb-2">Total(Incl. taxes)</p>
-                          <p className="mb-2">{cartItems.TotalPrice} VNĐ</p>
+                          <p className="mb-2">
+                          {/* {cartItems.TotalPrice} */}
+                          10,000,000
+                           VNĐ</p>
                         </div>
                         <Link to="/checkout/">
                           <MDBBtn color="info" block size="lg" >
                             <div className="d-flex justify-content-between">
-                              <span>{cartItems.TotalPrice} VNĐ</span>
+                              <span>
+                              {/* {cartItems.TotalPrice} */} 10,030,000
+                               VNĐ</span>
                               <button onClick={handleCheckout} disabled={isLoading}>
                                 {isLoading ? "Đang xử lý..." : "Checkout"}
                                 <i className="fas fa-long-arrow-alt-right ms-2"></i>
