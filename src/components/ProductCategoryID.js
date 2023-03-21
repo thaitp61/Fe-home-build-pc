@@ -51,6 +51,7 @@ const ProductCategoryID = () => {
           <option value="high-to-low">Thứ tự theo giá: cao đến thấp</option>
         </select>
       </form>
+      &nbsp;
       <div>
         <div className="row">
           {products.map(component => (

@@ -6,7 +6,6 @@ import {
   MDBCol,
   MDBContainer,
   MDBIcon,
-  MDBInput,
   MDBRow,
   MDBTypography,
 } from "mdb-react-ui-kit";
@@ -28,6 +27,8 @@ const AppCart = ({ }) => {
       console.error(error);
     }
   };
+
+  
   useEffect(() => {
     fetchCartItems();
   }, []);
@@ -79,7 +80,7 @@ const AppCart = ({ }) => {
       });
   };
   const handleQuantityChange = (componentID, newQuantity) => {
-    const updatedCartItems = cartItems?.ProductDetail?.map((item) =>
+    const updatedCartItems = cartItems?.component?.map((item) =>
       item._componentID === componentID ? { ...item, amount: newQuantity } : item
     );
     setCartItems(updatedCartItems);
@@ -143,14 +144,15 @@ const AppCart = ({ }) => {
                       </div>
                     </div>
                     <MDBCard className="rounded-3 mb-4">
-                      {cartItems?.ProductDetail?.map((item) => (
+                      {cartItems?.component?.map((item) => (
                         <MDBCardBody className="p-4" key={item._componentID}>
                           <MDBRow className="justify-content-between align-items-center">
 
                             <MDBCol md="2" lg="2" xl="2">
 
                               <MDBCardImage
-                                src={item?.image}
+                                // src={item?.image}
+                                src="https://file.hstatic.net/200000536009/collection/pc_gaming_core_i7_a89473a0ce934d868844387097dca141.jpg"
                                 fluid className="rounded-3" style={{ width: "100px" }}
                                 alt="image item" />
 
@@ -183,8 +185,8 @@ const AppCart = ({ }) => {
                               </div>
                             </MDBCol>
                             <MDBCol md="3" lg="2" xl="2" className="offset-lg-1">
-                              <MDBTypography tag="h5" className="mb-0 text-danger" >
-                                totally: {(item.price * item.amount).toLocaleString('vi-VN')} VNĐ
+                              <MDBTypography tag="h5" className="mb-0 text-primary" >
+                                 {(item.price * item.amount).toLocaleString('vi-VN')} VNĐ
                               </MDBTypography>
                             </MDBCol>
                             <MDBCol md="1" lg="1" xl="1" className="text-end" onClick={() => removeComponent(item?.componentID, "PhuongThai")} >
@@ -194,8 +196,60 @@ const AppCart = ({ }) => {
                             </MDBCol>
                           </MDBRow>
                         </MDBCardBody>
+                      ))}
 
+                      {cartItems?.product?.map((item) => (
+                        <MDBCardBody className="p-4" key={item._productID}>
+                          <MDBRow className="justify-content-between align-items-center">
 
+                            <MDBCol md="2" lg="2" xl="2">
+
+                              <MDBCardImage
+                                // src={item?.image}
+                                src="https://file.hstatic.net/200000536009/collection/pc_gaming_core_i7_a89473a0ce934d868844387097dca141.jpg"
+                                fluid className="rounded-3" style={{ width: "100px" }}
+                                alt="image item" />
+
+                            </MDBCol>
+                            <MDBCol md="3" lg="3" xl="3">
+                              <p className="lead fw-normal mb-2">{item.productID}</p>
+                              <p>
+                                <span className="text-muted">price: {(item.total).toLocaleString('vi-VN')} </span>
+                              </p>
+                            </MDBCol>
+                            <MDBCol md="3" lg="3" xl="2"
+                              className="d-flex align-items-center justify-content-around">
+                              <div>
+                                <button
+                                  onClick={() =>
+                                    handleQuantityChange(item?.componentID, item.amount - 1)
+                                  }
+                                  disabled={item.amount === 1}
+                                >
+                                  -
+                                </button>
+                                <span>{item.amount}</span>
+                                <button
+                                  onClick={() =>
+                                    handleQuantityChange(item?.componentID, item.amount + 1)
+                                  }
+                                >
+                                  +
+                                </button>
+                              </div>
+                            </MDBCol>
+                            <MDBCol md="3" lg="2" xl="2" className="offset-lg-1">
+                              <MDBTypography tag="h5" className="mb-0 text-primary" >
+                                 {(item.total * item.amount).toLocaleString('vi-VN')} VNĐ
+                              </MDBTypography>
+                            </MDBCol>
+                            <MDBCol md="1" lg="1" xl="1" className="text-end" onClick={() => removeComponent(item?.productID, "PhuongThai")} >
+                              <a className="text-danger">
+                                <MDBIcon fas icon="trash text-danger" size="lg" />
+                              </a>
+                            </MDBCol>
+                          </MDBRow>
+                        </MDBCardBody>
                       ))}
                     </MDBCard>
                   </MDBCol>

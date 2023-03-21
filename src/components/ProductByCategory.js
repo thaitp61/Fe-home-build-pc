@@ -13,16 +13,22 @@ import {
   MDBBtn,
   MDBRipple,
 } from "mdb-react-ui-kit";
-import Product from "./Product";
+import ProductByPC from "./ProductByPC";
 const ProductByCategory = () => {
+  const [components, setComponents] = useState([]);
   const [products, setProducts] = useState([]);
-  const { categoryTypeID } = useParams("lapgaming");
+  const { categoryTypeID } = useParams("");
   const [sortOption, setSortOption] = useState("none");
   useEffect(() => {
     // Gọi API lấy danh sách sản phẩm theo categoryID
     axios.get(`https://server-buildingpc.herokuapp.com/component/componentListByCategoryTypeID?categoryTypeID=${categoryTypeID}`)
-      .then(response => setProducts(response.data));
-  }, [categoryTypeID]);
+      .then(response => setComponents(response.data));
+
+
+  }, [categoryTypeID]
+  );
+
+
 
   function handleSortChange(event) {
     const option = event.target.value;
@@ -51,13 +57,16 @@ const ProductByCategory = () => {
       </form>
       <div>
         <div className="row" >
-          {products.map(component => (
+          {components.map(component => (
             <MDBCol md="12" lg="3" className="mb-4">
               <Link key={component.componentID} to={`/product/${component.componentID}`} >
-                <Product id={component.componentID} componentName={component.componentName} price={component.price} image={component.image} />
+                <ProductByPC id={component.componentID} componentName={component.componentName} price={component.price} image={component.image} />
               </Link>
             </MDBCol>
           ))}
+
+
+
         </div>
       </div>
 

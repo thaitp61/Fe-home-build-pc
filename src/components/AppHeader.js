@@ -54,12 +54,14 @@ const AppHeader = () => {
                 <NavDropdown.Item as={Link} to="/product-category/manhinh/screen/">Màn hình văn phòng</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/product-category/manhinh/">Xem tất cả</NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown title="Phụ kiện" id="basic-nav-dropdown">
+              {/* <NavDropdown title="Phụ kiện" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#">Đế tản nhiệt</NavDropdown.Item>
                 <NavDropdown.Item href="#">Phụ kiện PC</NavDropdown.Item>
                 <NavDropdown.Item href="#">Thiết bị mạng</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/product-category/phukien/">Xem tất cả</NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown> */}
+              <Nav.Link as={Link} to="product-category/fgear-pc/">Fgear PC</Nav.Link>
+              <Nav.Link as={Link} to="/product-category/phukien/">Phụ kiện</Nav.Link>
               <Nav.Link as={Link} to="custom-pc/">Tự Chọn cấu hình PC</Nav.Link>
             </Nav>
 

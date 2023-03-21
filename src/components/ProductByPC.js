@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from 'react-dom';
-import axios from "axios";
-import Product from "./Product";
-import Form from 'react-bootstrap/Form';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import {
     MDBContainer,
@@ -15,21 +13,20 @@ import {
     MDBBtn,
     MDBRipple,
 } from "mdb-react-ui-kit";
-import "../css/ProductList.css"
-
-function ProductList() {
+import ProductPC from "./ProductPC";
+const ProductByCategory = () => {
     const [products, setProducts] = useState([]);
     const [sortOption, setSortOption] = useState("none");
 
-
     useEffect(() => {
-        const fetchData = async () => {
-            const result = await axios.get('https://server-buildingpc.herokuapp.com/component/allComponent');
-            setProducts(result.data);
-        };
+        axios.get('https://server-buildingpc.herokuapp.com/product/getAllProducts')
+            .then(response => setProducts(response.data))
+            .catch(error => console.log(error));
+    },[]
+    );
 
-        fetchData();
-    }, []);
+
+
     function handleSortChange(event) {
         const option = event.target.value;
         setSortOption(option);
@@ -44,8 +41,10 @@ function ProductList() {
     }
 
     return (
-        <div>
-            <h1 class="alert alert-info clearfix" >Danh sách sản phẩm</h1>
+        <MDBContainer fluid className="my-5 text-center">
+            <h1 className="mt-4 mb-5">
+                <strong></strong>
+            </h1>
             <form className="form-sort">
                 <select className="input-sort" value={sortOption} onChange={handleSortChange}>
                     <option value="none">Mặc định</option>
@@ -53,18 +52,22 @@ function ProductList() {
                     <option value="high-to-low">Thứ tự theo giá: cao đến thấp</option>
                 </select>
             </form>
-            &nbsp;
-            <div className="row">
-                {products.map(component => (
-                    <MDBCol md="12" lg="3" className="mb-4">
-                        <Link key={component.componentID} to={`/product/${component.componentID}`} >
-                            <Product id={component.componentID} componentName={component.componentName} price={component.price} image={component.image} />
-                        </Link>
-                    </MDBCol>
-                ))}
+            <div>
+                <div className="row" >
+                    {products.map(product => (
+                        <MDBCol md="12" lg="3" className="mb-4">
+                            <Link key={product.productID} to={`/product/${product.productID}`} >
+                                <ProductPC id={product.productID} productName={product.productID} total={product.total} image="https://media.wired.com/photos/624df21cb340f55b37084fdc/2:3/w_1200,h_1800,c_limit/How-to-Build-a-PC-Gear.jpg" />
+                            </Link>
+                        </MDBCol>
+                    ))}
+                </div>
             </div>
-        </div>
+
+        </MDBContainer>
+
+
     );
 }
 
-export default ProductList;
+export default ProductByCategory
