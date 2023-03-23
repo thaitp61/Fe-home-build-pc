@@ -34,6 +34,8 @@ const ComponentDetail = () => {
     fetchComponent();
   }, [id]);
 
+  
+
   const { componentName, image, price, description, amount } = component;
   const addToCart = (data1) => {
     axios.post('https://server-buildingpc.herokuapp.com/cart/add', data1)
@@ -62,7 +64,7 @@ const ComponentDetail = () => {
                 <span className="price-label">Price: </span>
                 <span className="price-value">{price} VND</span>
               </div>
-              <Form.Group controlId="quantity">
+              {/* <Form.Group controlId="quantity">
                 <Form.Label>Quantity</Form.Label>
                 <Form.Control
                   as="select"
@@ -78,6 +80,16 @@ const ComponentDetail = () => {
                   )}
                 </Form.Control>
 
+              </Form.Group> */}
+              <Form.Group controlId="quantity">
+                <Form.Label>Quantity</Form.Label>
+                <Form.Control
+                  type="number"
+                  min={1}
+                  max={amount}
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                />
               </Form.Group>
               <Button variant="primary" className="add-to-cart-btn" onClick={() => addToCart({ userID: 'PhuongThai', componentID: id, amount: quantity, })}>
                 <FaCartPlus className="cart-icon" />

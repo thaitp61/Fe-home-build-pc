@@ -71,10 +71,10 @@ const Custom = () => {
       productID: productID,
       listComponent: JSON.parse(`${requestProduct}`),
       amount: parseInt(value),
-      total: totalPrice * parseInt(value),
+      total: totalPrice ,
       userID: "PhuongThai"
     };
-    axios.post('https://server-buildingpc.herokuapp.com/product/addProduct', requestBody, {
+    axios.post('https://server-buildingpc.herokuapp.com/product/addProductCustomToCart', requestBody, {
       headers: {
         'Content-Type': 'application/json',
       },

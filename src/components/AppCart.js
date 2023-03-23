@@ -28,7 +28,7 @@ const AppCart = ({ }) => {
     }
   };
 
-  
+
   useEffect(() => {
     fetchCartItems();
   }, []);
@@ -81,27 +81,20 @@ const AppCart = ({ }) => {
   };
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleCheckout = (userID) => {
+  const handleCheckout = (userID, totalPrice) => {
     setIsLoading(true);
-    fetch("https://server-buildingpc.herokuapp.com/bill/checkout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userID: "PhuongThai"
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    axios.post(`https://server-buildingpc.herokuapp.com/bill/checkout?total=${totalPrice}&userID=${userID}`)
+      .then((response) => {
         // xử lý dữ liệu trả về từ server, nếu có
         setIsLoading(false);
       })
       .catch((error) => {
         // xử lý lỗi khi gọi API
+        console.error(error);
         setIsLoading(false);
       });
   };
+
   const handleQuantityChange = (componentID, newQuantity) => {
     const updatedCartItems = cartItems?.component?.map((item) =>
       item._componentID === componentID ? { ...item, amount: newQuantity } : item
@@ -109,7 +102,16 @@ const AppCart = ({ }) => {
     setCartItems(updatedCartItems);
     updateCartItem(componentID, newQuantity);
   };
-  
+  const handleQuantityChangePC = (productID, newQuantity) => {
+    const updatedCartItemPC = cartItems?.product?.map((item) =>
+      item._productID === productID ? { ...item, amount: newQuantity } : item
+    );
+    setCartItems(updatedCartItemPC);
+    updateCartItemPC(productID, newQuantity);
+  };
+  const totalPrice = cartItems?.component?.reduce((acc, item) => acc + (item.price * item.amount), 0)
+    + cartItems?.product?.reduce((acc, item) => acc + (item.total * item.amount), 0);
+
 
 
   const updateCartItem = async (componentID, newQuantity) => {
@@ -120,6 +122,29 @@ const AppCart = ({ }) => {
           userID: "PhuongThai",
           amount: newQuantity,
           componentID: componentID,
+        }
+      );
+      if (response.ok) {
+        console.log('Update amount successfully');
+        // gọi hàm getCart để cập nhật danh sách giỏ hàng
+        fetchCartItems();
+      } else {
+        fetchCartItems();
+        console.log('Error Update amount');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateCartItemPC = async (productID, newQuantity) => {
+    try {
+      const response = await axios.put(
+        "https://server-buildingpc.herokuapp.com/cart/updateamount",
+        {
+          userID: "PhuongThai",
+          amount: newQuantity,
+          productID: productID,
         }
       );
       if (response.ok) {
@@ -154,7 +179,7 @@ const AppCart = ({ }) => {
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <div>
                         <p className="mb-1">Shopping cart</p>
-                        <b className="mb-0">You have {cartItems?.totalQuantity} items in your cart</b>
+                        <b className="mb-0">You have {cartItems?.totalQuantity || 0} items in your cart</b>
                       </div>
                       <div>
                         <p>
@@ -183,7 +208,7 @@ const AppCart = ({ }) => {
                             <MDBCol md="3" lg="3" xl="3">
                               <p className="lead fw-normal mb-2">{item.componentName}</p>
                               <p>
-                                <span className="text-muted">price: {(item.price).toLocaleString('vi-VN')} </span>
+                                <span className="text-muted" class="text-primary">price: {(item.price).toLocaleString('vi-VN')} </span>
                               </p>
                             </MDBCol>
                             <MDBCol md="3" lg="3" xl="2"
@@ -209,7 +234,7 @@ const AppCart = ({ }) => {
                             </MDBCol>
                             <MDBCol md="3" lg="2" xl="2" className="offset-lg-1">
                               <MDBTypography tag="h5" className="mb-0 text-primary" >
-                                 {(item.price * item.amount).toLocaleString('vi-VN')} VNĐ
+                                {(item.price * item.amount).toLocaleString('vi-VN')} VNĐ
                               </MDBTypography>
                             </MDBCol>
                             <MDBCol md="1" lg="1" xl="1" className="text-end" onClick={() => removeComponent(item?.componentID, "PhuongThai")} >
@@ -236,8 +261,16 @@ const AppCart = ({ }) => {
                             </MDBCol>
                             <MDBCol md="3" lg="3" xl="3">
                               <p className="lead fw-normal mb-2">{item.productID}</p>
-                              <p>
-                                <span className="text-muted">price: {(item.total).toLocaleString('vi-VN')} </span>
+
+                              {item?.productDetail?.map((detail, index) => (
+                                <p key={index} className="lead fw-normal mb-2" class="text-secondary">
+                                  {detail}
+                                  <br />
+                                </p>
+                              ))}
+
+                              <p tag="h5" className="mb-0" >
+                                <span className="text-muted" class="text-primary">price: {(item.total).toLocaleString('vi-VN')} </span>
                               </p>
                             </MDBCol>
                             <MDBCol md="3" lg="3" xl="2"
@@ -245,7 +278,7 @@ const AppCart = ({ }) => {
                               <div>
                                 <button
                                   onClick={() =>
-                                    handleQuantityChange(item?.componentID, item.amount - 1)
+                                    handleQuantityChangePC(item?.productID, item.amount - 1)
                                   }
                                   disabled={item.amount === 1}
                                 >
@@ -254,7 +287,7 @@ const AppCart = ({ }) => {
                                 <span>{item.amount}</span>
                                 <button
                                   onClick={() =>
-                                    handleQuantityChange(item?.componentID, item.amount + 1)
+                                    handleQuantityChangePC(item?.productID, item.amount + 1)
                                   }
                                 >
                                   +
@@ -263,10 +296,10 @@ const AppCart = ({ }) => {
                             </MDBCol>
                             <MDBCol md="3" lg="2" xl="2" className="offset-lg-1">
                               <MDBTypography tag="h5" className="mb-0 text-primary" >
-                                 {(item.total * item.amount).toLocaleString('vi-VN')} 
-                                 
-                                 
-                                 VNĐ
+                                {(item.total * item.amount).toLocaleString('vi-VN')}
+
+
+                                VNĐ
                               </MDBTypography>
                             </MDBCol>
                             <MDBCol md="1" lg="1" xl="1" className="text-end" onClick={() => removeProduct(item?.productID, "PhuongThai")} >
@@ -288,24 +321,22 @@ const AppCart = ({ }) => {
                         <div className="d-flex justify-content-between">
                           <p className="mb-2">Subtotal</p>
                           <p className="mb-2">
-                          {/* {(cartItems.TotalPrice)}  */}30,000
-                          VNĐ</p>
+                            0
+                            VNĐ</p>
                         </div>
 
                         <div className="d-flex justify-content-between">
-                          <p className="mb-2">Total(Incl. taxes)</p>
+                          <p className="mb-2">Total price: </p>
                           <p className="mb-2">
-                          {/* {cartItems.TotalPrice} */}
-                          10,000,000
-                           VNĐ</p>
+                            {totalPrice.toLocaleString('vi-VN')} VNĐ</p>
                         </div>
                         <Link to="/checkout/">
-                          <MDBBtn color="info" block size="lg" >
+                          <MDBBtn color="info" block size="lg">
                             <div className="d-flex justify-content-between">
-                              <span>
-                              {/* {cartItems.TotalPrice} */} 10,030,000
-                               VNĐ</span>
-                              <button onClick={handleCheckout} disabled={isLoading}>
+                              <span style={{ fontSize: "1.2em" }}>
+                                {totalPrice.toLocaleString('vi-VN')} VNĐ
+                              </span>
+                              <button onClick={() => handleCheckout("PhuongThai", totalPrice)} disabled={isLoading}>
                                 {isLoading ? "Đang xử lý..." : "Checkout"}
                                 <i className="fas fa-long-arrow-alt-right ms-2"></i>
                               </button>
