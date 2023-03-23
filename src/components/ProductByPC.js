@@ -25,8 +25,6 @@ const ProductByCategory = () => {
     },[]
     );
 
-
-
     function handleSortChange(event) {
         const option = event.target.value;
         setSortOption(option);
@@ -63,7 +61,6 @@ const ProductByCategory = () => {
                     ))}
                 </div>
             </div>
-
         </MDBContainer>
 
 

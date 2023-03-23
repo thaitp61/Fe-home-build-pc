@@ -13,7 +13,7 @@ import {
   MDBBtn,
   MDBRipple,
 } from "mdb-react-ui-kit";
-import ProductByPC from "./ProductByPC";
+import Product from "./Product";
 const ProductByCategory = () => {
   const [components, setComponents] = useState([]);
   const [products, setProducts] = useState([]);
@@ -27,9 +27,6 @@ const ProductByCategory = () => {
 
   }, [categoryTypeID]
   );
-
-
-
   function handleSortChange(event) {
     const option = event.target.value;
     setSortOption(option);
@@ -60,19 +57,13 @@ const ProductByCategory = () => {
           {components.map(component => (
             <MDBCol md="12" lg="3" className="mb-4">
               <Link key={component.componentID} to={`/product/${component.componentID}`} >
-                <ProductByPC id={component.componentID} componentName={component.componentName} price={component.price} image={component.image} />
+                <Product id={component.componentID} componentName={component.componentName} price={component.price} image={component.image} />
               </Link>
             </MDBCol>
           ))}
-
-
-
         </div>
       </div>
-
     </MDBContainer>
-
-
   );
 }
 

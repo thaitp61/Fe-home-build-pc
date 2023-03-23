@@ -10,7 +10,7 @@ import {
   MDBBtn,
   MDBRipple,
 } from "mdb-react-ui-kit";
-import ComponentList from "../components/ProductList"
+import AppHome from "../components/AppHome"
 const Home = (props) => {
   return (
 
@@ -18,7 +18,7 @@ const Home = (props) => {
       <h4 className="mt-4 mb-5">
         <strong></strong>
       </h4>
-      <ComponentList/>
+      <AppHome/>
       
     </MDBContainer>
 

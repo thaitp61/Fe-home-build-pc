@@ -3,7 +3,6 @@ import './App.css';
 import { BrowserRouter, Routes, Route, } from "react-router-dom";
 import AppLayout from './components/AppLayout';
 import Home from "./pages/Home"
-import AppHome from './components/AppHome';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import About from './pages/About';
@@ -33,7 +32,7 @@ function App() {
             <Route path="custom-pc/" element={<Custom />} />
             <Route path="product-category/:categoryTypeID/" element={<ProductByCategory />} />
             <Route path="product-category/:categoryTypeID/:categoryID/" element={<ProductCategoryID />} />
-            <Route path="product-category/fgear-pc/" element={<ProductByPC />} />
+            <Route path="product-category-pc/fgear-pc/" element={<ProductByPC />} />
             <Route path="/search/:searchQuery" element={<AppSearch />} />
             <Route path="contact" element={<Contact />} />
             <Route path="login" element={<Login/>} />

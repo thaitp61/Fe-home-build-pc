@@ -60,7 +60,7 @@ const AppHeader = () => {
                 <NavDropdown.Item href="#">Thiết bị mạng</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/product-category/phukien/">Xem tất cả</NavDropdown.Item>
               </NavDropdown> */}
-              <Nav.Link as={Link} to="product-category/fgear-pc/">Fgear PC</Nav.Link>
+              <Nav.Link as={Link} to="/product-category-pc/fgear-pc/">Fgear PC</Nav.Link>
               <Nav.Link as={Link} to="/product-category/phukien/">Phụ kiện</Nav.Link>
               <Nav.Link as={Link} to="custom-pc/">Tự Chọn cấu hình PC</Nav.Link>
             </Nav>
