@@ -29,7 +29,7 @@ export const AuthContextProvider = ({ children }) => {
               console.log("hai", currentUser);
               setUser(currentUser);
         if (
-          currentUser.email.endsWith("vophuocthanha19052017@gmail.com")
+          currentUser.email.endsWith("@fpt.edu.vn")
         ) {
           currentUser.getIdToken().then((token) => {
             setAccessToken(token);
@@ -37,7 +37,7 @@ export const AuthContextProvider = ({ children }) => {
         } else {
           logOut();
           setTimeout(() => {
-            alert("Please you dont admin please dont enter");
+            alert("This account not access");
           }, 1000);
         }
       } else {

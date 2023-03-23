@@ -26,8 +26,9 @@ function App() {
       <AuthContextProvider>
       <BrowserRouter>
         <Routes>
+       
           <Route path="/" element={<AppLayout />}>
-            <Route index element={<Home />} />
+            {/* <Route exact path='/' index element={<Home />} /> */}
             <Route path="about" element={<Protected><About /></Protected>} />
             <Route path="product/:id" element={<Protected><ComponentDetail /></Protected>} />
             <Route path="cart/" element={<Protected><AppCart /></Protected>} />

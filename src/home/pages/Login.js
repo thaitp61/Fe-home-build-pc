@@ -107,7 +107,7 @@ const Login = () => {
     if(typeof userDataString ==="string" && userDataString !== ""){
       userData = JSON.parse(userDataString);
     }
-    if (accessToken && userData &&  userData.roleName !=="") {
+    if (accessToken && userData &&  userData.roleName !=="ROLE_ADMIN") {
       navigate("/");
     } else {
       navigate("");
@@ -117,26 +117,7 @@ const Login = () => {
 
 
   return (
-//     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
-//      <div className='login-body'>
-//     <div className="container" id="container">
-//         <div class="form-container log-in-container">
-//             <form action="#">
-//             <div className="max-w-[240px] m-auto py-4">
-//                       <GoogleButton onClick={handleGoogleSignIn} />
-//                     </div>
-//             </form >
-//         </div>
-//         <div className="overlay-container">
-//             <div className="overlay">
-//                 <div className="overlay-panel overlay-right">
-//                     <img src='https://www.tncstore.vn/image/catalog/BAI%20VIET/PC%20Gaming%20m%E1%BB%9Bi/partner01%20(1).jpg' />
-//                 </div>
-//             </div>
-//         </div>
-//     </div>
-// </div>
-//     </div>
+
 <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
