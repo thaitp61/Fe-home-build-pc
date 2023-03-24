@@ -19,6 +19,17 @@ import {
 } from "mdb-react-ui-kit";
 
 const ProductPCDetail = () => {
+
+  const [allCpuComponents, setAllCpuComponents] = useState([]);
+  const [allRamComponents, setAllRamComponents] = useState([]);
+  const [allPsuComponents, setAllPsuComponents] = useState([]);
+  const [allTannhietComponents, setAllTannhietComponents] = useState([]);
+  const [allVgaComponents, setAllVgaComponents] = useState([]);
+  const [allBomachchuComponents, setAllBomachchuComponents] = useState([]);
+  const [allLuutruComponents, setAllLuutruComponents] = useState([]);
+  const [allCaseComponents, setAllCaseComponents] = useState([]);
+
+
   const [products, setProducts] = useState({});
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
@@ -59,12 +70,108 @@ const ProductPCDetail = () => {
       setCaseComponents(caseComponents);
       const tannhietComponents = data.components.filter(component => component.categoryID === "tannhiet");
       setTannhietComponents(tannhietComponents);
+
+      const allCpuList = await axios.get('https://server-buildingpc.herokuapp.com/component/componentListByCategoryID?categoryID=cpu');
+      const uniqueCpuComponents = [];
+      const seenComponentIDs = new Set();
+      for (const component of [...cpuComponents, ...allCpuList.data]) {
+        if (component.categoryID !== "cpu" || seenComponentIDs.has(component.componentID)) {
+          continue;
+        }
+        uniqueCpuComponents.push(component);
+        seenComponentIDs.add(component.componentID);
+      }
+
+      setAllCpuComponents(uniqueCpuComponents);
+
+      const allRamList = await axios.get('https://server-buildingpc.herokuapp.com/component/componentListByCategoryID?categoryID=ram');
+      const uniqueRamComponents = [];
+      for (const component of [...ramComponents, ...allRamList.data]) {
+        if (component.categoryID !== "ram" || seenComponentIDs.has(component.componentID)) {
+          continue;
+        }
+        uniqueRamComponents.push(component);
+        seenComponentIDs.add(component.componentID);
+      }
+
+      setAllRamComponents(uniqueRamComponents);
+
+
+      const allBomachchuList = await axios.get('https://server-buildingpc.herokuapp.com/component/componentListByCategoryID?categoryID=bomachchu');
+      const uniqueBomachchuComponents = [];
+      for (const component of [...bomachchuComponents, ...allBomachchuList.data]) {
+        if (component.categoryID !== "bomachchu" || seenComponentIDs.has(component.componentID)) {
+          continue;
+        }
+        uniqueBomachchuComponents.push(component);
+        seenComponentIDs.add(component.componentID);
+      }
+
+      setAllBomachchuComponents(uniqueBomachchuComponents);
+
+      const allVgaList = await axios.get('https://server-buildingpc.herokuapp.com/component/componentListByCategoryID?categoryID=vga');
+      const uniqueVgaComponents = [];
+      for (const component of [...vgaComponents, ...allVgaList.data]) {
+        if (component.categoryID !== "vga" || seenComponentIDs.has(component.componentID)) {
+          continue;
+        }
+        uniqueVgaComponents.push(component);
+        seenComponentIDs.add(component.componentID);
+      }
+
+      setAllVgaComponents(uniqueVgaComponents);
+
+      const allPsuList = await axios.get('https://server-buildingpc.herokuapp.com/component/componentListByCategoryID?categoryID=psu');
+      const uniquePsuComponents = [];
+      for (const component of [...psuComponents, ...allPsuList.data]) {
+        if (component.categoryID !== "psu" || seenComponentIDs.has(component.componentID)) {
+          continue;
+        }
+        uniquePsuComponents.push(component);
+        seenComponentIDs.add(component.componentID);
+      }
+
+      setAllPsuComponents(uniquePsuComponents);
+
+      const allLuutruList = await axios.get('https://server-buildingpc.herokuapp.com/component/componentListByCategoryID?categoryID=luutru');
+      const uniqueLuutruComponents = [];
+      for (const component of [...luutruComponents, ...allLuutruList.data]) {
+        if (component.categoryID !== "luutru" || seenComponentIDs.has(component.componentID)) {
+          continue;
+        }
+        uniqueLuutruComponents.push(component);
+        seenComponentIDs.add(component.componentID);
+      }
+
+      setAllLuutruComponents(uniqueLuutruComponents);
+
+      const allCaseList = await axios.get('https://server-buildingpc.herokuapp.com/component/componentListByCategoryID?categoryID=case');
+      const uniqueCaseComponents = [];
+      for (const component of [...caseComponents, ...allCaseList.data]) {
+        if (component.categoryID !== "case" || seenComponentIDs.has(component.componentID)) {
+          continue;
+        }
+        uniqueCaseComponents.push(component);
+        seenComponentIDs.add(component.componentID);
+      }
+
+      setAllCaseComponents(uniqueCaseComponents);
+
+      const allTannhietList = await axios.get('https://server-buildingpc.herokuapp.com/component/componentListByCategoryID?categoryID=tannhiet');
+      const uniqueTanhietComponents = [];
+      for (const component of [...tannhietComponents, ...allTannhietList.data]) {
+        if (component.categoryID !== "tannhiet" || seenComponentIDs.has(component.componentID)) {
+          continue;
+        }
+        uniqueTanhietComponents.push(component);
+        seenComponentIDs.add(component.componentID);
+      }
+
+      setAllTannhietComponents(uniqueTanhietComponents);
     };
     fetchComponent();
   }, [id]);
 
-  // const cpuComponents = products?.components?.filter(component => component.categoryID === "cpu");
-  // console.log(cpuComponents)
 
 
   const { productID, total, amount } = products;
@@ -101,22 +208,16 @@ const ProductPCDetail = () => {
 
           <Col md={6}>
             <div className="product-details">
+
               <Form.Group controlId="quantity">
                 <Form.Label>Quantity</Form.Label>
                 <Form.Control
-                  as="select"
+                  type="number"
+                  min={1}
+                  max={amount}
                   value={quantity}
                   onChange={handleQuantityChange}
-                >
-                  {Array.from({ length: amount }, (_, i) => i + 1).map(
-                    (quantity) => (
-                      <option key={quantity} value={quantity}>
-                        {quantity}
-                      </option>
-                    )
-                  )}
-                </Form.Control>
-
+                />
               </Form.Group>
 
 
@@ -124,10 +225,19 @@ const ProductPCDetail = () => {
           </Col>
 
           <div>
-            <Form.Group className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+            {/* <Form.Group className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
               <Form.Label class="text-danger" inline style={{ marginRight: '1rem', minWidth: '6rem' }}>CPU:</Form.Label>
               <Form.Select aria-label="CPU component select" defaultValue={cpuComponents[0]?.componentID}>
                 {cpuComponents.map(component => (
+                  <option key={component.componentID} value={component.componentID}>{component.componentName}</option>
+                ))}
+              </Form.Select>
+            </Form.Group> */}
+
+            <Form.Group className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
+              <Form.Label class="text-danger" inline style={{ marginRight: '1rem', minWidth: '6rem' }}>CPU:</Form.Label>
+              <Form.Select aria-label="CPU component select" defaultValue={cpuComponents[0]?.componentID}>
+                {allCpuComponents.map(component => (
                   <option key={component.componentID} value={component.componentID}>{component.componentName}</option>
                 ))}
               </Form.Select>
@@ -136,7 +246,7 @@ const ProductPCDetail = () => {
             <Form.Group className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
               <Form.Label class="text-danger" inline style={{ marginRight: '1rem', minWidth: '6rem' }}>RAM:</Form.Label>
               <Form.Select aria-label="CPU component select" defaultValue={cpuComponents[0]?.componentID}>
-                {ramComponents.map(component => (
+                {allRamComponents.map(component => (
                   <option key={component.componentID} value={component.componentID}>{component.componentName}</option>
                 ))}
               </Form.Select>
@@ -145,7 +255,7 @@ const ProductPCDetail = () => {
             <Form.Group className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
               <Form.Label class="text-danger" inline style={{ marginRight: '1rem', minWidth: '6rem' }}>Nguồn:</Form.Label>
               <Form.Select aria-label="CPU component select" defaultValue={cpuComponents[0]?.componentID}>
-                {psuComponents.map(component => (
+                {allPsuComponents.map(component => (
                   <option key={component.componentID} value={component.componentID}>{component.componentName}</option>
                 ))}
               </Form.Select>
@@ -154,7 +264,7 @@ const ProductPCDetail = () => {
             <Form.Group className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
               <Form.Label class="text-danger" inline style={{ marginRight: '1rem', minWidth: '6rem' }}>VGA:</Form.Label>
               <Form.Select aria-label="CPU component select" defaultValue={cpuComponents[0]?.componentID}>
-                {vgaComponents.map(component => (
+                {allVgaComponents.map(component => (
                   <option key={component.componentID} value={component.componentID}>{component.componentName}</option>
                 ))}
               </Form.Select>
@@ -164,7 +274,7 @@ const ProductPCDetail = () => {
             <Form.Group className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
               <Form.Label class="text-danger" inline style={{ marginRight: '1rem', minWidth: '6rem' }}>Lưu trữ:</Form.Label>
               <Form.Select aria-label="CPU component select" defaultValue={cpuComponents[0]?.componentID}>
-                {luutruComponents.map(component => (
+                {allLuutruComponents.map(component => (
                   <option key={component.componentID} value={component.componentID}>{component.componentName}</option>
                 ))}
               </Form.Select>
@@ -173,7 +283,7 @@ const ProductPCDetail = () => {
             <Form.Group className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
               <Form.Label class="text-danger" inline style={{ marginRight: '1rem', minWidth: '6rem' }}>Main:</Form.Label>
               <Form.Select aria-label="CPU component select" defaultValue={cpuComponents[0]?.componentID}>
-                {bomachchuComponents.map(component => (
+                {allBomachchuComponents.map(component => (
                   <option key={component.componentID} value={component.componentID}>{component.componentName}</option>
                 ))}
               </Form.Select>
@@ -182,7 +292,7 @@ const ProductPCDetail = () => {
             <Form.Group className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
               <Form.Label class="text-danger" inline style={{ marginRight: '1rem', minWidth: '6rem' }}>Tản nhiệt:</Form.Label>
               <Form.Select aria-label="CPU component select" defaultValue={cpuComponents[0]?.componentID}>
-                {tannhietComponents.map(component => (
+                {allTannhietComponents.map(component => (
                   <option key={component.componentID} value={component.componentID}>{component.componentName}</option>
                 ))}
               </Form.Select>
@@ -191,7 +301,7 @@ const ProductPCDetail = () => {
             <Form.Group className="mb-3" style={{ display: 'flex', alignItems: 'center' }}>
               <Form.Label class="text-danger" inline style={{ marginRight: '1rem', minWidth: '6rem' }}>Case:</Form.Label>
               <Form.Select aria-label="CPU component select" defaultValue={cpuComponents[0]?.componentID}>
-                {caseComponents.map(component => (
+                {allCaseComponents.map(component => (
                   <option key={component.componentID} value={component.componentID}>{component.componentName}</option>
                 ))}
               </Form.Select>
