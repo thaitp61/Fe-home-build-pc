@@ -15,14 +15,13 @@ import {
 } from "mdb-react-ui-kit";
 import Product from "./Product";
 const ProductByCategory = () => {
-  const [components, setComponents] = useState([]);
   const [products, setProducts] = useState([]);
   const { categoryTypeID } = useParams("");
   const [sortOption, setSortOption] = useState("none");
   useEffect(() => {
     // Gọi API lấy danh sách sản phẩm theo categoryID
     axios.get(`https://server-buildingpc.herokuapp.com/component/componentListByCategoryTypeID?categoryTypeID=${categoryTypeID}`)
-      .then(response => setComponents(response.data));
+      .then(response => setProducts(response.data));
 
 
   }, [categoryTypeID]
@@ -54,7 +53,7 @@ const ProductByCategory = () => {
       </form>
       <div>
         <div className="row" >
-          {components.map(component => (
+          {products.map(component => (
             <MDBCol md="12" lg="3" className="mb-4">
               <Link key={component.componentID} to={`/product/${component.componentID}`} >
                 <Product id={component.componentID} componentName={component.componentName} price={component.price} image={component.image} />
