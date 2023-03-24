@@ -98,7 +98,7 @@ function AppHome() {
           {pcs?.slice(0, 8).map(product => (
             <MDBCol md="12" lg="3" className="mb-4">
               <Link key={product.productID} to={`/product/${product.productID}`} >
-                <ProductPC id={product.productID} productName={product.productID} total={product.total} image="https://media.wired.com/photos/624df21cb340f55b37084fdc/2:3/w_1200,h_1800,c_limit/How-to-Build-a-PC-Gear.jpg" />
+                <ProductPC id={product.productID} productName={product.productID} total={product.total} image={product.imageProduct} />
               </Link>
             </MDBCol>
           ))}

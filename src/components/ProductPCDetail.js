@@ -174,7 +174,7 @@ const ProductPCDetail = () => {
 
 
 
-  const { productID, total, amount } = products;
+  const { productID, total, amount, imageProduct } = products;
   const addToCart = (data1) => {
     axios.post('https://server-buildingpc.herokuapp.com/cart/add', data1)
       .then((response) => {
@@ -191,7 +191,7 @@ const ProductPCDetail = () => {
         <Row>
           <Col md={4}>
             <div className="product-image">
-              <img src="https://media.wired.com/photos/624df21cb340f55b37084fdc/2:3/w_1200,h_1800,c_limit/How-to-Build-a-PC-Gear.jpg" alt={productID} />
+              <img src={imageProduct} alt={productID} />
             </div>
           </Col>
           <Col md={8}>
@@ -201,7 +201,7 @@ const ProductPCDetail = () => {
               &nbsp;
               <div className="product-price">
                 <span className="price-label">Price: </span>
-                <span className="price-value text-danger">{total} VND</span>
+                <span className="price-value text-primary">{total?.toLocaleString('vi-VN')} VND</span>
               </div>
             </div>
           </Col>

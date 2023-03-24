@@ -15,13 +15,13 @@ const AppCheckout = () => {
     const calculateTotalPrice = () => {
         let totalPrice = 0;
         bills?.ProductID?.forEach((bill) => {
-          totalPrice += bill.total * bill.amount;
+            totalPrice += bill.total * bill.amount;
         });
         bills?.Component?.forEach((bill) => {
-          totalPrice += bill.price * bill.amount;
+            totalPrice += bill.price * bill.amount;
         });
         return totalPrice.toLocaleString('vi-VN');
-      };
+    };
     const [redirect, setRedirect] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
@@ -31,6 +31,16 @@ const AppCheckout = () => {
     };
 
     const handleOrder = () => {
+        axios.post('https://server-buildingpc.herokuapp.com/bill/finishCheckout', {
+            userID: "PhuongThai"
+        })
+            .then(response => {
+                // Xử lý phản hồi từ API tại đây
+                setIsSuccess(true);
+            })
+            .catch(error => {
+                // Xử lý lỗi tại đây
+            });
         // Xử lý khi đặt hàng thành công
         setIsSuccess(true);
 
@@ -49,7 +59,7 @@ const AppCheckout = () => {
                 console.log(error);
             });
     }, []);
- 
+
 
     return (
         <div className="maincontainer">
@@ -68,7 +78,7 @@ const AppCheckout = () => {
 
                         <ul className="list-group mb-3">
                             {bills?.Component?.map((bill) => (
-                                
+
                                 <div key={bill.componentID}>
                                     <li className="list-group-item d-flex justify-content-between lh-condensed">
                                         <div>
@@ -137,44 +147,7 @@ const AppCheckout = () => {
                                 <label for="phone">Số điện thoại</label>
                                 <input type="tel" class="form-control" id="phone" defaultValue="0375207610" required />
                             </div>
-                            {/* <div class="row">
-                                <div class="col-md-5 mb-3">
-                                    <label for="country">Country</label>
-                                    <select class="custom-select d-block w-100" id="country" required>
-                                        <option value="">Choose...</option>
-                                        <option>United States</option>
-                                    </select>
-                                    <div class="invalid-feedback">
-                                        Please select a valid country.
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="state">State</label>
-                                    <select class="custom-select d-block w-100" id="state" required>
-                                        <option value="">Choose...</option>
-                                        <option>California</option>
-                                    </select>
-                                    <div class="invalid-feedback">
-                                        Please provide a valid state.
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label for="zip">Zip</label>
-                                    <input type="text" class="form-control" id="zip" placeholder="" required />
-                                    <div class="invalid-feedback">
-                                        Zip code required.
-                                    </div>
-                                </div>
-                            </div> */}
-                            {/* <hr class="mb-4" /> */}
-                            {/* <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="same-address" />
-                                <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-                            </div>
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="save-info" />
-                                <label class="custom-control-label" for="save-info">Save this information for next time</label>
-                            </div> */}
+
                             <hr class="mb-4" />
                             <h4 class="mb-3">Payment</h4>
                             <div class="d-block my-3">

@@ -27,7 +27,7 @@ function ProductPC({ id, productName, total, image }) {
             <a className="text-reset">
               <h5 className="card-title mb-3">{productName}</h5>
             </a>
-            <h3 className="mb-3 text-danger">{total.toLocaleString('vi-VN')}  VNĐ</h3>
+            <h3 className="mb-3 text-danger">{total?.toLocaleString('vi-VN')}  VNĐ</h3>
           </div>
         </MDBCardBody>
       </MDBCard>
